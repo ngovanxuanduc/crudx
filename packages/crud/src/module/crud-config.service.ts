@@ -1,8 +1,8 @@
-import { RequestQueryBuilder } from '@dataui/crud-request';
-import { isObjectFull } from '@dataui/crud-util';
-import * as deepmerge from 'deepmerge';
+import { RequestQueryBuilder } from "@crudx/crud-request";
+import { isObjectFull } from "@crudx/crud-util";
+import * as deepmerge from "deepmerge";
 
-import { CrudGlobalConfig } from '../interfaces';
+import { CrudGlobalConfig } from "../interfaces";
 
 export class CrudConfigService {
   static config: CrudGlobalConfig = {
@@ -29,7 +29,11 @@ export class CrudConfigService {
         returnShallow: false,
       },
       deleteOneBase: { interceptors: [], decorators: [], returnDeleted: false },
-      recoverOneBase: { interceptors: [], decorators: [], returnRecovered: false },
+      recoverOneBase: {
+        interceptors: [],
+        decorators: [],
+        returnRecovered: false,
+      },
     },
     params: {},
   };

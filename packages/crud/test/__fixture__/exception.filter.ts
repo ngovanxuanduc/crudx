@@ -1,6 +1,11 @@
-import { ArgumentsHost, Catch, ExceptionFilter, HttpStatus } from '@nestjs/common';
-import { RequestQueryException } from '@dataui/crud-request';
-import { Response } from 'express';
+import {
+  ArgumentsHost,
+  Catch,
+  ExceptionFilter,
+  HttpStatus,
+} from "@nestjs/common";
+import { RequestQueryException } from "@crudx/crud-request";
+import { Response } from "express";
 
 @Catch(RequestQueryException)
 export class HttpExceptionFilter implements ExceptionFilter {

@@ -1,44 +1,50 @@
-import { RequestQueryBuilder } from '@dataui/crud-request';
-import { CrudGlobalConfig } from '../src/interfaces';
-import { CrudConfigService } from '../src/module/crud-config.service';
+import { RequestQueryBuilder } from "@crudx/crud-request";
+import { CrudGlobalConfig } from "../src/interfaces";
+import { CrudConfigService } from "../src/module/crud-config.service";
 
-describe('#crud', () => {
-  describe('#CrudConfigService', () => {
+describe("#crud", () => {
+  describe("#CrudConfigService", () => {
     const defaultConfig = { ...CrudConfigService.config };
 
     beforeEach(() => {
       CrudConfigService.config = { ...defaultConfig };
     });
 
-    it('should set default config, 1', () => {
+    it("should set default config, 1", () => {
       const conf: CrudGlobalConfig = {};
       const expected = { ...CrudConfigService.config };
       CrudConfigService.load(conf);
-      expect(CrudConfigService.config).toEqual(expect.objectContaining(expected));
+      expect(CrudConfigService.config).toEqual(
+        expect.objectContaining(expected),
+      );
     });
-    it('should set default config, 2', () => {
+    it("should set default config, 2", () => {
       const expected = { ...CrudConfigService.config };
       CrudConfigService.load();
-      expect(CrudConfigService.config).toEqual(expect.objectContaining(expected));
+      expect(CrudConfigService.config).toEqual(
+        expect.objectContaining(expected),
+      );
     });
-    it('should set queryParser', () => {
+    it("should set queryParser", () => {
       const requestOptions = { ...RequestQueryBuilder.getOptions() };
       const conf: CrudGlobalConfig = {
         queryParser: {
-          delim: '__',
+          delim: "__",
         },
       };
       const expected = { ...CrudConfigService.config };
       CrudConfigService.load(conf);
-      expect(CrudConfigService.config).toEqual(expect.objectContaining(expected));
+      expect(CrudConfigService.config).toEqual(
+        expect.objectContaining(expected),
+      );
       expect(RequestQueryBuilder.getOptions()).toEqual(
-        expect.objectContaining({ ...requestOptions, delim: '__' }),
+        expect.objectContaining({ ...requestOptions, delim: "__" }),
       );
     });
-    it('should set query, routes, params', () => {
+    it("should set query, routes, params", () => {
       const conf: CrudGlobalConfig = {
         auth: {
-          property: 'user',
+          property: "user",
         },
         query: {
           limit: 10,
@@ -48,8 +54,8 @@ describe('#crud', () => {
         },
         params: {
           id: {
-            field: 'id',
-            type: 'uuid',
+            field: "id",
+            type: "uuid",
             primary: true,
           },
         },
@@ -68,7 +74,7 @@ describe('#crud', () => {
       };
       const expected = {
         auth: {
-          property: 'user',
+          property: "user",
         },
         query: {
           limit: 10,
@@ -78,8 +84,8 @@ describe('#crud', () => {
         },
         params: {
           id: {
-            field: 'id',
-            type: 'uuid',
+            field: "id",
+            type: "uuid",
             primary: true,
           },
         },
@@ -89,7 +95,11 @@ describe('#crud', () => {
             decorators: [],
           },
           getOneBase: { interceptors: [], decorators: [] },
-          createOneBase: { interceptors: [], decorators: [], returnShallow: false },
+          createOneBase: {
+            interceptors: [],
+            decorators: [],
+            returnShallow: false,
+          },
           createManyBase: { interceptors: [], decorators: [] },
           updateOneBase: {
             interceptors: [],
@@ -103,8 +113,16 @@ describe('#crud', () => {
             allowParamsOverride: true,
             returnShallow: false,
           },
-          deleteOneBase: { interceptors: [], decorators: [], returnDeleted: false },
-          recoverOneBase: { interceptors: [], decorators: [], returnRecovered: false },
+          deleteOneBase: {
+            interceptors: [],
+            decorators: [],
+            returnDeleted: false,
+          },
+          recoverOneBase: {
+            interceptors: [],
+            decorators: [],
+            returnRecovered: false,
+          },
         },
       };
       CrudConfigService.load(conf);

@@ -1,27 +1,27 @@
-import { Controller, INestApplication } from '@nestjs/common';
-import { APP_FILTER } from '@nestjs/core';
-import { Test } from '@nestjs/testing';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { Controller, INestApplication } from "@nestjs/common";
+import { APP_FILTER } from "@nestjs/core";
+import { Test } from "@nestjs/testing";
+import { TypeOrmModule } from "@nestjs/typeorm";
 
-import { Crud } from '@dataui/crud';
-import { RequestQueryBuilder } from '@dataui/crud-request';
-import * as request from 'supertest';
-import { Company } from '../../../integration/crud-typeorm/companies';
-import { Device } from '../../../integration/crud-typeorm/devices';
-import { withCache } from '../../../integration/crud-typeorm/orm.config';
-import { Project } from '../../../integration/crud-typeorm/projects';
-import { User } from '../../../integration/crud-typeorm/users';
-import { UserProfile } from '../../../integration/crud-typeorm/users-profiles';
-import { HttpExceptionFilter } from '../../../integration/shared/https-exception.filter';
-import { CompaniesService } from './__fixture__/companies.service';
-import { UsersService } from './__fixture__/users.service';
-import { DevicesService } from './__fixture__/devices.service';
+import { Crud } from "@crudx/crud";
+import { RequestQueryBuilder } from "@crudx/crud-request";
+import * as request from "supertest";
+import { Company } from "../../../integration/crud-typeorm/companies";
+import { Device } from "../../../integration/crud-typeorm/devices";
+import { withCache } from "../../../integration/crud-typeorm/orm.config";
+import { Project } from "../../../integration/crud-typeorm/projects";
+import { User } from "../../../integration/crud-typeorm/users";
+import { UserProfile } from "../../../integration/crud-typeorm/users-profiles";
+import { HttpExceptionFilter } from "../../../integration/shared/https-exception.filter";
+import { CompaniesService } from "./__fixture__/companies.service";
+import { UsersService } from "./__fixture__/users.service";
+import { DevicesService } from "./__fixture__/devices.service";
 
-const isMysql = withCache.type === 'mysql';
+const isMysql = withCache.type === "mysql";
 
 // tslint:disable:max-classes-per-file no-shadowed-variable
-describe('#crud-typeorm', () => {
-  describe('#basic crud using alwaysPaginate default respects global limit', () => {
+describe("#crud-typeorm", () => {
+  describe("#basic crud using alwaysPaginate default respects global limit", () => {
     let app: INestApplication;
     let server: any;
     let qb: RequestQueryBuilder;
@@ -34,14 +34,17 @@ describe('#crud-typeorm', () => {
         limit: 3,
       },
     })
-    @Controller('companies0')
+    @Controller("companies0")
     class CompaniesController0 {
       constructor(public service: CompaniesService) {}
     }
 
     beforeAll(async () => {
       const fixture = await Test.createTestingModule({
-        imports: [TypeOrmModule.forRoot(withCache), TypeOrmModule.forFeature([Company])],
+        imports: [
+          TypeOrmModule.forRoot(withCache),
+          TypeOrmModule.forFeature([Company]),
+        ],
         controllers: [CompaniesController0],
         providers: [
           { provide: APP_FILTER, useClass: HttpExceptionFilter },
@@ -64,10 +67,10 @@ describe('#crud-typeorm', () => {
       await app.close();
     });
 
-    describe('#getAllBase', () => {
-      it('should return an array of all entities', (done) => {
+    describe("#getAllBase", () => {
+      it("should return an array of all entities", (done) => {
         return request(server)
-          .get('/companies0')
+          .get("/companies0")
           .end((_, res) => {
             expect(res.status).toBe(200);
             expect(res.body.data.length).toBe(3);
@@ -78,7 +81,7 @@ describe('#crud-typeorm', () => {
     });
   });
 
-  describe('#basic crud using alwaysPaginate default', () => {
+  describe("#basic crud using alwaysPaginate default", () => {
     let app: INestApplication;
     let server: any;
     let qb: RequestQueryBuilder;
@@ -88,14 +91,17 @@ describe('#crud-typeorm', () => {
       model: { type: Company },
       query: { alwaysPaginate: true },
     })
-    @Controller('companies')
+    @Controller("companies")
     class CompaniesController {
       constructor(public service: CompaniesService) {}
     }
 
     beforeAll(async () => {
       const fixture = await Test.createTestingModule({
-        imports: [TypeOrmModule.forRoot(withCache), TypeOrmModule.forFeature([Company])],
+        imports: [
+          TypeOrmModule.forRoot(withCache),
+          TypeOrmModule.forFeature([Company]),
+        ],
         controllers: [CompaniesController],
         providers: [
           { provide: APP_FILTER, useClass: HttpExceptionFilter },
@@ -118,10 +124,10 @@ describe('#crud-typeorm', () => {
       await app.close();
     });
 
-    describe('#getAllBase', () => {
-      it('should return an array of all entities', (done) => {
+    describe("#getAllBase", () => {
+      it("should return an array of all entities", (done) => {
         return request(server)
-          .get('/companies')
+          .get("/companies")
           .end((_, res) => {
             expect(res.status).toBe(200);
             expect(res.body.data.length).toBe(9);
@@ -129,10 +135,10 @@ describe('#crud-typeorm', () => {
             done();
           });
       });
-      it('should return an entities with limit', (done) => {
+      it("should return an entities with limit", (done) => {
         const query = qb.setLimit(5).query();
         return request(server)
-          .get('/companies')
+          .get("/companies")
           .query(query)
           .end((_, res) => {
             expect(res.status).toBe(200);
@@ -141,14 +147,14 @@ describe('#crud-typeorm', () => {
             done();
           });
       });
-      it('should return an entities with limit and page', (done) => {
+      it("should return an entities with limit and page", (done) => {
         const query = qb
           .setLimit(3)
           .setPage(1)
-          .sortBy({ field: 'id', order: 'DESC' })
+          .sortBy({ field: "id", order: "DESC" })
           .query();
         return request(server)
-          .get('/companies')
+          .get("/companies")
           .query(query)
           .end((_, res) => {
             expect(res.status).toBe(200);
@@ -161,7 +167,7 @@ describe('#crud-typeorm', () => {
     });
   });
 
-  describe('#basic crud', () => {
+  describe("#basic crud", () => {
     let app: INestApplication;
     let server: any;
     let qb: RequestQueryBuilder;
@@ -173,7 +179,7 @@ describe('#crud-typeorm', () => {
         softDelete: true,
       },
     })
-    @Controller('companies')
+    @Controller("companies")
     class CompaniesController {
       constructor(public service: CompaniesService) {}
     }
@@ -182,12 +188,12 @@ describe('#crud-typeorm', () => {
       model: { type: User },
       params: {
         companyId: {
-          field: 'companyId',
-          type: 'number',
+          field: "companyId",
+          type: "number",
         },
         id: {
-          field: 'id',
-          type: 'number',
+          field: "id",
+          type: "number",
           primary: true,
         },
       },
@@ -197,14 +203,14 @@ describe('#crud-typeorm', () => {
         },
       },
       query: {
-        persist: ['isActive'],
+        persist: ["isActive"],
         cache: 10000,
       },
       validation: {
         transform: true,
       },
     })
-    @Controller('companies/:companyId/users')
+    @Controller("companies/:companyId/users")
     class UsersController {
       constructor(public service: UsersService) {}
     }
@@ -220,7 +226,7 @@ describe('#crud-typeorm', () => {
         },
       },
     })
-    @Controller('/users2')
+    @Controller("/users2")
     class UsersController2 {
       constructor(public service: UsersService) {}
     }
@@ -235,7 +241,7 @@ describe('#crud-typeorm', () => {
         },
       },
     })
-    @Controller('/users3')
+    @Controller("/users3")
     class UsersController3 {
       constructor(public service: UsersService) {}
     }
@@ -243,11 +249,11 @@ describe('#crud-typeorm', () => {
     @Crud({
       model: { type: User },
       params: {
-        companyId: { field: 'companyId', type: 'number', primary: true },
-        profileId: { field: 'profileId', type: 'number', primary: true },
+        companyId: { field: "companyId", type: "number", primary: true },
+        profileId: { field: "profileId", type: "number", primary: true },
       },
     })
-    @Controller('users4')
+    @Controller("users4")
     class UsersController4 {
       constructor(public service: UsersService) {}
     }
@@ -256,8 +262,8 @@ describe('#crud-typeorm', () => {
       model: { type: Device },
       params: {
         deviceKey: {
-          field: 'deviceKey',
-          type: 'uuid',
+          field: "deviceKey",
+          type: "uuid",
           primary: true,
         },
       },
@@ -267,7 +273,7 @@ describe('#crud-typeorm', () => {
         },
       },
     })
-    @Controller('devices')
+    @Controller("devices")
     class DevicesController {
       constructor(public service: DevicesService) {}
     }
@@ -276,7 +282,13 @@ describe('#crud-typeorm', () => {
       const fixture = await Test.createTestingModule({
         imports: [
           TypeOrmModule.forRoot({ ...withCache, logging: false }),
-          TypeOrmModule.forFeature([Company, Project, User, UserProfile, Device]),
+          TypeOrmModule.forFeature([
+            Company,
+            Project,
+            User,
+            UserProfile,
+            Device,
+          ]),
         ],
         controllers: [
           CompaniesController,
@@ -309,15 +321,15 @@ describe('#crud-typeorm', () => {
       await app.close();
     });
 
-    describe('#find', () => {
-      it('should return entities', async () => {
+    describe("#find", () => {
+      it("should return entities", async () => {
         const data = await service.find();
         expect(data.length).toBe(9);
       });
     });
 
-    describe('#findOne', () => {
-      it('should return one entity', async () => {
+    describe("#findOne", () => {
+      it("should return one entity", async () => {
         const data = await service.findOne({
           where: {
             id: 1,
@@ -327,8 +339,8 @@ describe('#crud-typeorm', () => {
       });
     });
 
-    describe('#findOneBy', () => {
-      it('should return one entity', async () => {
+    describe("#findOneBy", () => {
+      it("should return one entity", async () => {
         const data = await service.findOneBy({
           id: 1,
         });
@@ -336,27 +348,27 @@ describe('#crud-typeorm', () => {
       });
     });
 
-    describe('#count', () => {
-      it('should return number', async () => {
+    describe("#count", () => {
+      it("should return number", async () => {
         const data = await service.count();
-        expect(typeof data).toBe('number');
+        expect(typeof data).toBe("number");
       });
     });
 
-    describe('#getAllBase', () => {
-      it('should return an array of all entities', (done) => {
+    describe("#getAllBase", () => {
+      it("should return an array of all entities", (done) => {
         return request(server)
-          .get('/companies?include_deleted=1')
+          .get("/companies?include_deleted=1")
           .end((_, res) => {
             expect(res.status).toBe(200);
             expect(res.body.length).toBe(10);
             done();
           });
       });
-      it('should return an entities with limit', (done) => {
+      it("should return an entities with limit", (done) => {
         const query = qb.setLimit(5).query();
         return request(server)
-          .get('/companies')
+          .get("/companies")
           .query(query)
           .end((_, res) => {
             expect(res.status).toBe(200);
@@ -364,14 +376,14 @@ describe('#crud-typeorm', () => {
             done();
           });
       });
-      it('should return an entities with limit and page', (done) => {
+      it("should return an entities with limit and page", (done) => {
         const query = qb
           .setLimit(3)
           .setPage(1)
-          .sortBy({ field: 'id', order: 'DESC' })
+          .sortBy({ field: "id", order: "DESC" })
           .query();
         return request(server)
-          .get('/companies')
+          .get("/companies")
           .query(query)
           .end((_, res) => {
             expect(res.status).toBe(200);
@@ -383,14 +395,14 @@ describe('#crud-typeorm', () => {
             done();
           });
       });
-      it('should return an entities with offset', (done) => {
+      it("should return an entities with offset", (done) => {
         const queryObj = qb.setOffset(3);
         if (isMysql) {
           queryObj.setLimit(10);
         }
         const query = queryObj.query();
         return request(server)
-          .get('/companies')
+          .get("/companies")
           .query(query)
           .end((_, res) => {
             expect(res.status).toBe(200);
@@ -405,45 +417,45 @@ describe('#crud-typeorm', () => {
       });
     });
 
-    describe('#getOneBase', () => {
-      it('should return status 404', (done) => {
+    describe("#getOneBase", () => {
+      it("should return status 404", (done) => {
         return request(server)
-          .get('/companies/333')
+          .get("/companies/333")
           .end((_, res) => {
             expect(res.status).toBe(404);
             done();
           });
       });
-      it('should return status 404 for deleted entity', (done) => {
+      it("should return status 404 for deleted entity", (done) => {
         return request(server)
-          .get('/companies/9')
+          .get("/companies/9")
           .end((_, res) => {
             expect(res.status).toBe(404);
             done();
           });
       });
-      it('should return a deleted entity if include_deleted query param is specified', (done) => {
+      it("should return a deleted entity if include_deleted query param is specified", (done) => {
         return request(server)
-          .get('/companies/9?include_deleted=1')
+          .get("/companies/9?include_deleted=1")
           .end((_, res) => {
             expect(res.status).toBe(200);
             expect(res.body.id).toBe(9);
             done();
           });
       });
-      it('should return an entity, 1', (done) => {
+      it("should return an entity, 1", (done) => {
         return request(server)
-          .get('/companies/1')
+          .get("/companies/1")
           .end((_, res) => {
             expect(res.status).toBe(200);
             expect(res.body.id).toBe(1);
             done();
           });
       });
-      it('should return an entity, 2', (done) => {
-        const query = qb.select(['domain']).query();
+      it("should return an entity, 2", (done) => {
+        const query = qb.select(["domain"]).query();
         return request(server)
-          .get('/companies/1')
+          .get("/companies/1")
           .query(query)
           .end((_, res) => {
             expect(res.status).toBe(200);
@@ -452,18 +464,18 @@ describe('#crud-typeorm', () => {
             done();
           });
       });
-      it('should return an entity with compound key', (done) => {
+      it("should return an entity with compound key", (done) => {
         return request(server)
-          .get('/users4/1/5')
+          .get("/users4/1/5")
           .end((_, res) => {
             expect(res.status).toBe(200);
             expect(res.body.id).toBe(5);
             done();
           });
       });
-      it('should return an entity with and set cache', (done) => {
+      it("should return an entity with and set cache", (done) => {
         return request(server)
-          .get('/companies/1/users/1')
+          .get("/companies/1/users/1")
           .end((_, res) => {
             expect(res.status).toBe(200);
             expect(res.body.id).toBe(1);
@@ -472,36 +484,36 @@ describe('#crud-typeorm', () => {
           });
       });
 
-      it('should return an entity with its embedded entity properties', (done) => {
+      it("should return an entity with its embedded entity properties", (done) => {
         return request(server)
-          .get('/companies/1/users/1')
+          .get("/companies/1/users/1")
           .end((_, res) => {
             expect(res.status).toBe(200);
             expect(res.body.id).toBe(1);
-            expect(res.body.name.first).toBe('firstname1');
-            expect(res.body.name.last).toBe('lastname1');
+            expect(res.body.name.first).toBe("firstname1");
+            expect(res.body.name.last).toBe("lastname1");
             done();
           });
       });
     });
 
-    describe('#createOneBase', () => {
-      it('should return status 400', (done) => {
+    describe("#createOneBase", () => {
+      it("should return status 400", (done) => {
         return request(server)
-          .post('/companies')
-          .send('')
+          .post("/companies")
+          .send("")
           .end((_, res) => {
             expect(res.status).toBe(400);
             done();
           });
       });
-      it('should return saved entity', (done) => {
+      it("should return saved entity", (done) => {
         const dto = {
-          name: 'test0',
-          domain: 'test0',
+          name: "test0",
+          domain: "test0",
         };
         return request(server)
-          .post('/companies')
+          .post("/companies")
           .send(dto)
           .end((_, res) => {
             expect(res.status).toBe(201);
@@ -509,20 +521,20 @@ describe('#crud-typeorm', () => {
             done();
           });
       });
-      it('should return saved entity with param', (done) => {
+      it("should return saved entity with param", (done) => {
         const dto: any = {
-          email: 'test@test.com',
+          email: "test@test.com",
           isActive: true,
           name: {
-            first: 'test',
-            last: 'last',
+            first: "test",
+            last: "last",
           },
           profile: {
-            name: 'testName',
+            name: "testName",
           },
         };
         return request(server)
-          .post('/companies/1/users')
+          .post("/companies/1/users")
           .send(dto)
           .end((_, res) => {
             expect(res.status).toBe(201);
@@ -531,10 +543,10 @@ describe('#crud-typeorm', () => {
             done();
           });
       });
-      it('should return with `returnShallow`', (done) => {
-        const dto: any = { description: 'returnShallow is true' };
+      it("should return with `returnShallow`", (done) => {
+        const dto: any = { description: "returnShallow is true" };
         return request(server)
-          .post('/devices')
+          .post("/devices")
           .send(dto)
           .end((_, res) => {
             expect(res.status).toBe(201);
@@ -545,32 +557,32 @@ describe('#crud-typeorm', () => {
       });
     });
 
-    describe('#createManyBase', () => {
-      it('should return status 400', (done) => {
+    describe("#createManyBase", () => {
+      it("should return status 400", (done) => {
         const dto = { bulk: [] };
         return request(server)
-          .post('/companies/bulk')
+          .post("/companies/bulk")
           .send(dto)
           .end((_, res) => {
             expect(res.status).toBe(400);
             done();
           });
       });
-      it('should return created entities', (done) => {
+      it("should return created entities", (done) => {
         const dto = {
           bulk: [
             {
-              name: 'test1',
-              domain: 'test1',
+              name: "test1",
+              domain: "test1",
             },
             {
-              name: 'test2',
-              domain: 'test2',
+              name: "test2",
+              domain: "test2",
             },
           ],
         };
         return request(server)
-          .post('/companies/bulk')
+          .post("/companies/bulk")
           .send(dto)
           .end((_, res) => {
             expect(res.status).toBe(201);
@@ -581,32 +593,32 @@ describe('#crud-typeorm', () => {
       });
     });
 
-    describe('#updateOneBase', () => {
-      it('should return status 404', (done) => {
-        const dto = { name: 'updated0' };
+    describe("#updateOneBase", () => {
+      it("should return status 404", (done) => {
+        const dto = { name: "updated0" };
         return request(server)
-          .patch('/companies/333')
+          .patch("/companies/333")
           .send(dto)
           .end((_, res) => {
             expect(res.status).toBe(404);
             done();
           });
       });
-      it('should return updated entity, 1', (done) => {
-        const dto = { name: 'updated0' };
+      it("should return updated entity, 1", (done) => {
+        const dto = { name: "updated0" };
         return request(server)
-          .patch('/companies/1')
+          .patch("/companies/1")
           .send(dto)
           .end((_, res) => {
             expect(res.status).toBe(200);
-            expect(res.body.name).toBe('updated0');
+            expect(res.body.name).toBe("updated0");
             done();
           });
       });
-      it('should return updated entity, 2', (done) => {
+      it("should return updated entity, 2", (done) => {
         const dto = { isActive: false, companyId: 5 };
         return request(server)
-          .patch('/companies/1/users/22')
+          .patch("/companies/1/users/22")
           .send(dto)
           .end((_, res) => {
             expect(res.status).toBe(200);
@@ -615,122 +627,116 @@ describe('#crud-typeorm', () => {
             done();
           });
       });
-      it('should not return cached value while patching', async () => {
-        const dto = { name: { first: 'nameHasBeenPatched' } };
+      it("should not return cached value while patching", async () => {
+        const dto = { name: { first: "nameHasBeenPatched" } };
         const updateUser = () =>
-          request(server)
-            .patch('/companies/2/users/17')
-            .send(dto);
+          request(server).patch("/companies/2/users/17").send(dto);
 
-        const query = qb.select(['name.first']).query();
+        const query = qb.select(["name.first"]).query();
         const getUserCachedAfterUpdate = () =>
-          request(server)
-            .get('/companies/2/users/17')
-            .query(query);
+          request(server).get("/companies/2/users/17").query(query);
 
-        const resBeforeUpdateGetUser = await getUserCachedAfterUpdate().expect(200);
+        const resBeforeUpdateGetUser =
+          await getUserCachedAfterUpdate().expect(200);
         expect(resBeforeUpdateGetUser.body.name.first).toBe(null);
 
         const resUpdateUser = await updateUser().expect(200);
-        expect(resUpdateUser.body.name.first).toBe('nameHasBeenPatched');
+        expect(resUpdateUser.body.name.first).toBe("nameHasBeenPatched");
 
         const resGetUser = await getUserCachedAfterUpdate().expect(200);
-        expect(resGetUser.body.name.first).toBe('nameHasBeenPatched');
+        expect(resGetUser.body.name.first).toBe("nameHasBeenPatched");
       });
-      it('should not return cached value while updating', async () => {
-        const dto = { name: { last: 'nameHasBeenUpdated' } };
+      it("should not return cached value while updating", async () => {
+        const dto = { name: { last: "nameHasBeenUpdated" } };
         const updateUser = () =>
-          request(server)
-            .put('/companies/2/users/17')
-            .send(dto);
+          request(server).put("/companies/2/users/17").send(dto);
 
-        const query = qb.select(['name.last']).query();
+        const query = qb.select(["name.last"]).query();
         const getUserCachedAfterUpdate = () =>
-          request(server)
-            .get('/companies/2/users/17')
-            .query(query);
+          request(server).get("/companies/2/users/17").query(query);
 
-        const resBeforeUpdateGetUser = await getUserCachedAfterUpdate().expect(200);
+        const resBeforeUpdateGetUser =
+          await getUserCachedAfterUpdate().expect(200);
         expect(resBeforeUpdateGetUser.body.name.last).toBe(null);
 
         const resUpdateUser = await updateUser().expect(200);
-        expect(resUpdateUser.body.name.last).toBe('nameHasBeenUpdated');
+        expect(resUpdateUser.body.name.last).toBe("nameHasBeenUpdated");
 
         const resGetUser = await getUserCachedAfterUpdate().expect(200);
-        expect(resGetUser.body.name.last).toBe('nameHasBeenUpdated');
+        expect(resGetUser.body.name.last).toBe("nameHasBeenUpdated");
       });
     });
 
-    describe('#replaceOneBase', () => {
-      it('should create entity', (done) => {
-        const dto = { name: 'updated0', domain: 'domain0' };
+    describe("#replaceOneBase", () => {
+      it("should create entity", (done) => {
+        const dto = { name: "updated0", domain: "domain0" };
         return request(server)
-          .put('/companies/333')
+          .put("/companies/333")
           .send(dto)
           .end((_, res) => {
             expect(res.status).toBe(200);
-            expect(res.body.name).toBe('updated0');
+            expect(res.body.name).toBe("updated0");
             done();
           });
       });
-      it('should return updated entity, 1', (done) => {
-        const dto = { name: 'updated0' };
+      it("should return updated entity, 1", (done) => {
+        const dto = { name: "updated0" };
         return request(server)
-          .put('/companies/1')
+          .put("/companies/1")
           .send(dto)
           .end((_, res) => {
             expect(res.status).toBe(200);
-            expect(res.body.name).toBe('updated0');
+            expect(res.body.name).toBe("updated0");
             done();
           });
       });
     });
 
-    describe('#deleteOneBase', () => {
-      it('should return status 404', (done) => {
+    describe("#deleteOneBase", () => {
+      it("should return status 404", (done) => {
         return request(server)
-          .delete('/companies/3333')
+          .delete("/companies/3333")
           .end((_, res) => {
             expect(res.status).toBe(404);
             done();
           });
       });
-      it('should softly delete entity', (done) => {
+      it("should softly delete entity", (done) => {
         return request(server)
-          .delete('/companies/5')
+          .delete("/companies/5")
           .end((_, res) => {
             expect(res.status).toBe(200);
             done();
           });
       });
-      it('should not return softly deleted entity', (done) => {
+      it("should not return softly deleted entity", (done) => {
         return request(server)
-          .get('/companies/5')
+          .get("/companies/5")
           .end((_, res) => {
             expect(res.status).toBe(404);
             done();
           });
       });
-      it('should recover softly deleted entity', (done) => {
+      it("should recover softly deleted entity", (done) => {
         return request(server)
-          .patch('/companies/5/recover')
+          .patch("/companies/5/recover")
           .end((_, res) => {
             expect(res.status).toBe(200);
             done();
           });
       });
-      it('should return recovered entity', (done) => {
+      it("should return recovered entity", (done) => {
         return request(server)
-          .get('/companies/5')
+          .get("/companies/5")
           .end((_, res) => {
             expect(res.status).toBe(200);
             expect(res.body.id).toBe(5);
             done();
           });
       });
-      it('should return deleted entity', (done) => {
+      it("should return deleted entity", (done) => {
         return request(server)
-          .delete('/companies/1/users/22')
+          .delete("/companies/1/users/22")
           .end((_, res) => {
             expect(res.status).toBe(200);
             expect(res.body.id).toBe(22);
@@ -740,15 +746,15 @@ describe('#crud-typeorm', () => {
       });
     });
 
-    describe('join options: required', () => {
-      const users2 = () => request(server).get('/users2/21');
-      const users3 = () => request(server).get('/users3/21');
+    describe("join options: required", () => {
+      const users2 = () => request(server).get("/users2/21");
+      const users3 = () => request(server).get("/users3/21");
 
-      it('should return status 404', async () => {
+      it("should return status 404", async () => {
         await users2().expect(404);
       });
 
-      it('should return status 200', async () => {
+      it("should return status 200", async () => {
         const res = await users3().expect(200);
         expect(res.body.id).toBe(21);
         expect(res.body.profile).toBe(null);

@@ -1,9 +1,9 @@
-import { Injectable } from '@nestjs/common';
-import { ParsedRequestParams } from '@dataui/crud-request';
-import { CrudRequestOptions } from '../../../src/interfaces';
+import { Injectable } from "@nestjs/common";
+import { ParsedRequestParams } from "@crudx/crud-request";
+import { CrudRequestOptions } from "../../../src/interfaces";
 
-import { CreateManyDto, CrudRequest } from '../../../src/interfaces';
-import { CrudService } from '../../../src/services';
+import { CreateManyDto, CrudRequest } from "../../../src/interfaces";
+import { CrudService } from "../../../src/services";
 
 @Injectable()
 export class TestService<T> extends CrudService<T> {
@@ -31,7 +31,10 @@ export class TestService<T> extends CrudService<T> {
   async recoverOne(req: CrudRequest): Promise<any> {
     return { req };
   }
-  decidePagination(parsed: ParsedRequestParams, options: CrudRequestOptions): boolean {
+  decidePagination(
+    parsed: ParsedRequestParams,
+    options: CrudRequestOptions,
+  ): boolean {
     return true;
   }
 }

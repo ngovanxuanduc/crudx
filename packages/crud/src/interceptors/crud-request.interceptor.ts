@@ -4,21 +4,21 @@ import {
   ExecutionContext,
   Injectable,
   NestInterceptor,
-} from '@nestjs/common';
+} from "@nestjs/common";
 import {
   RequestQueryException,
   RequestQueryParser,
   SCondition,
   QueryFilter,
-} from '@dataui/crud-request';
-import { isNil, isFunction, isArrayFull, hasLength } from '@dataui/crud-util';
-import { ClassTransformOptions } from 'class-transformer';
+} from "@crudx/crud-request";
+import { isNil, isFunction, isArrayFull, hasLength } from "@crudx/crud-util";
+import { ClassTransformOptions } from "class-transformer";
 
-import { PARSED_CRUD_REQUEST_KEY } from '../constants';
-import { CrudActions } from '../enums';
-import { CrudRequest, MergedCrudOptions } from '../interfaces';
-import { QueryFilterFunction } from '../types';
-import { CrudBaseInterceptor } from './crud-base.interceptor';
+import { PARSED_CRUD_REQUEST_KEY } from "../constants";
+import { CrudActions } from "../enums";
+import { CrudRequest, MergedCrudOptions } from "../interfaces";
+import { QueryFilterFunction } from "../types";
+import { CrudBaseInterceptor } from "./crud-base.interceptor";
 
 @Injectable()
 export class CrudRequestInterceptor
@@ -38,7 +38,12 @@ export class CrudRequestInterceptor
 
         let auth = null;
         if (!isNil(ctrlOptions)) {
-          const search = this.getSearch(parser, crudOptions, action, req.params);
+          const search = this.getSearch(
+            parser,
+            crudOptions,
+            action,
+            req.params,
+          );
           auth = this.getAuth(parser, crudOptions, req);
           parser.search = auth.or
             ? { $or: [auth.or, { $and: search }] }
@@ -104,7 +109,9 @@ export class CrudRequestInterceptor
 
     // if `CrudOptions.query.filter` is array or search condition type
     const optionsFilter = isArrayFull(crudOptions.query.filter)
-      ? (crudOptions.query.filter as QueryFilter[]).map(parser.convertFilterToSearch)
+      ? (crudOptions.query.filter as QueryFilter[]).map(
+          parser.convertFilterToSearch,
+        )
       : [(crudOptions.query.filter as SCondition) || {}];
 
     let search: SCondition[] = [];
@@ -178,7 +185,7 @@ export class CrudRequestInterceptor
         : req;
 
       if (crudOptions.auth.property && req[crudOptions.auth.property]) {
-        if (typeof req[crudOptions.auth.property] === 'object') {
+        if (typeof req[crudOptions.auth.property] === "object") {
           if (Object.keys(req[crudOptions.auth.property]).length > 0) {
             auth.auth = req[crudOptions.auth.property];
           }
@@ -193,7 +200,8 @@ export class CrudRequestInterceptor
 
       if (isFunction(crudOptions.auth.filter) && !auth.or) {
         auth.filter =
-          crudOptions.auth.filter(userOrRequest) || /* istanbul ignore next */ {};
+          crudOptions.auth.filter(userOrRequest) ||
+          /* istanbul ignore next */ {};
       }
 
       if (isFunction(crudOptions.auth.persist)) {
@@ -202,7 +210,10 @@ export class CrudRequestInterceptor
 
       const options: ClassTransformOptions = {};
       if (isFunction(crudOptions.auth.classTransformOptions)) {
-        Object.assign(options, crudOptions.auth.classTransformOptions(userOrRequest));
+        Object.assign(
+          options,
+          crudOptions.auth.classTransformOptions(userOrRequest),
+        );
       }
 
       if (isFunction(crudOptions.auth.groups)) {

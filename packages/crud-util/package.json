@@ -1,5 +1,5 @@
 {
-  "name": "@dataui/crud-util",
+  "name": "@crudx/crud-util",
   "description": "NestJs CRUD for RESTful APIs - util",
   "version": "5.3.4",
   "license": "MIT",
@@ -14,10 +14,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/gid-oss/dataui-nestjs-crud"
+    "url": "https://github.com/ngovanxuanduc/crudx"
   },
   "bugs": {
-    "url": "https://github.com/gid-oss/dataui-nestjs-crud/issues"
+    "url": "https://github.com/ngovanxuanduc/crudx/issues"
   },
   "keywords": [
     "typescript",

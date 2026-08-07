@@ -1,16 +1,16 @@
-import { Controller } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
-import { Crud, CrudAuth } from '@dataui/crud';
+import { Controller } from "@nestjs/common";
+import { ApiTags } from "@nestjs/swagger";
+import { Crud, CrudAuth } from "@crudx/crud";
 
-import { User } from './user.entity';
-import { UsersService } from './users.service';
+import { User } from "./user.entity";
+import { UsersService } from "./users.service";
 
 @Crud({
   model: {
     type: User,
   },
   routes: {
-    only: ['getOneBase', 'updateOneBase'],
+    only: ["getOneBase", "updateOneBase"],
   },
   params: {
     id: {
@@ -35,8 +35,8 @@ import { UsersService } from './users.service';
     id: user.id,
   }),
 })
-@ApiTags('me')
-@Controller('me')
+@ApiTags("me")
+@Controller("me")
 export class MeController {
   constructor(public service: UsersService) {}
 }

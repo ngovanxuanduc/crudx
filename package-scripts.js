@@ -1,12 +1,14 @@
-const utils = require('nps-utils');
+const utils = require("nps-utils");
 
 const getSeries = (args) => utils.series.nps(...args);
-const names = ['crud-util', 'crud-request', 'crud', 'crud-typeorm'];
+const names = ["crud-util", "crud-request", "crud", "crud-typeorm"];
 
 const getBuildCmd = (pkg) => {
-  const str = 'npx lerna run build';
-  const scoped = (name) => `--scope @dataui/${name}`;
-  return pkg ? `${str} ${scoped(pkg)}` : getSeries(names.map((name) => `build.${name}`));
+  const str = "npx lerna run build";
+  const scoped = (name) => `--scope @crudx/${name}`;
+  return pkg
+    ? `${str} ${scoped(pkg)}`
+    : getSeries(names.map((name) => `build.${name}`));
 };
 
 const getCleanCmd = (pkg) => {
@@ -15,8 +17,8 @@ const getCleanCmd = (pkg) => {
 };
 
 const getTestCmd = (pkg, coverage) =>
-  `npx jest --runInBand -c=jest.config.js packages/${pkg ? pkg + '/' : ''} ${
-    coverage ? '--coverage' : ''
+  `npx jest --runInBand -c=jest.config.js packages/${pkg ? pkg + "/" : ""} ${
+    coverage ? "--coverage" : ""
   } --verbose`;
 
 const setBuild = () =>
@@ -32,7 +34,8 @@ const setClean = () =>
 const setTest = () =>
   names.reduce((a, c) => ({ ...a, [c]: getTestCmd(c) }), {
     default: getTestCmd(false, true),
-    coveralls: getTestCmd(false, true) + ' --coverageReporters=text-lcov | coveralls',
+    coveralls:
+      getTestCmd(false, true) + " --coverageReporters=text-lcov | coveralls",
   });
 
 module.exports = {

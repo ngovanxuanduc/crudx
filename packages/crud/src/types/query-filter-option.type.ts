@@ -1,10 +1,13 @@
 import {
   QueryFilter,
   SCondition,
-} from '@dataui/crud-request/lib/types/request-query.types';
+} from "@crudx/crud-request/lib/types/request-query.types";
 
 export type QueryFilterFunction = (
   search?: SCondition,
   getMany?: boolean,
 ) => SCondition | void;
-export type QueryFilterOption = QueryFilter[] | SCondition | QueryFilterFunction;
+export type QueryFilterOption =
+  | QueryFilter[]
+  | SCondition
+  | QueryFilterFunction;

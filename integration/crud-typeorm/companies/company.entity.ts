@@ -1,5 +1,11 @@
-import { CrudValidationGroups } from '@dataui/crud';
-import { Entity, Column, OneToMany, PrimaryGeneratedColumn, DeleteDateColumn } from 'typeorm';
+import { CrudValidationGroups } from "@crudx/crud";
+import {
+  Entity,
+  Column,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  DeleteDateColumn,
+} from "typeorm";
 import {
   IsOptional,
   IsString,
@@ -7,16 +13,16 @@ import {
   IsNotEmpty,
   IsNumber,
   IsEmpty,
-} from 'class-validator';
-import { Type } from 'class-transformer';
+} from "class-validator";
+import { Type } from "class-transformer";
 
-import { BaseEntity } from '../base-entity';
-import { User } from '../users/user.entity';
-import { Project } from '../projects/project.entity';
+import { BaseEntity } from "../base-entity";
+import { User } from "../users/user.entity";
+import { Project } from "../projects/project.entity";
 
 const { CREATE, UPDATE } = CrudValidationGroups;
 
-@Entity('companies')
+@Entity("companies")
 export class Company extends BaseEntity {
   @IsOptional({ groups: [UPDATE] })
   @IsEmpty({ groups: [CREATE] })
@@ -28,19 +34,19 @@ export class Company extends BaseEntity {
   @IsNotEmpty({ groups: [CREATE] })
   @IsString({ always: true })
   @MaxLength(100, { always: true })
-  @Column({ type: 'varchar', length: 100, nullable: false })
+  @Column({ type: "varchar", length: 100, nullable: false })
   name: string;
 
   @IsOptional({ groups: [UPDATE] })
   @IsNotEmpty({ groups: [CREATE] })
   @IsString({ groups: [CREATE, UPDATE] })
   @MaxLength(100, { groups: [CREATE, UPDATE] })
-  @Column({ type: 'varchar', length: 100, nullable: false, unique: true })
+  @Column({ type: "varchar", length: 100, nullable: false, unique: true })
   domain: string;
 
   @IsOptional({ always: true })
   @IsString({ always: true })
-  @Column({ type: 'text', nullable: true, default: null })
+  @Column({ type: "text", nullable: true, default: null })
   description: string;
 
   @DeleteDateColumn({ nullable: true })

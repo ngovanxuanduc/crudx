@@ -1,10 +1,10 @@
-import { RouteParamtypes } from '@nestjs/common/enums/route-paramtypes.enum';
-import * as CONSTANTS from '@nestjs/common/constants';
-import { ArgumentsHost } from '@nestjs/common';
-import { isFunction } from '@dataui/crud-util';
+import { RouteParamtypes } from "@nestjs/common/enums/route-paramtypes.enum";
+import * as CONSTANTS from "@nestjs/common/constants";
+import { ArgumentsHost } from "@nestjs/common";
+import { isFunction } from "@crudx/crud-util";
 
-import { BaseRoute, MergedCrudOptions, AuthOptions } from '../interfaces';
-import { BaseRouteName } from '../types';
+import { BaseRoute, MergedCrudOptions, AuthOptions } from "../interfaces";
+import { BaseRouteName } from "../types";
 import {
   CRUD_OPTIONS_METADATA,
   ACTION_NAME_METADATA,
@@ -12,11 +12,11 @@ import {
   PARSED_BODY_METADATA,
   OVERRIDE_METHOD_METADATA,
   CRUD_AUTH_OPTIONS_METADATA,
-} from '../constants';
-import { CrudActions } from '../enums';
+} from "../constants";
+import { CrudActions } from "../enums";
 
 const {
-  CUSTOM_ROUTE_AGRS_METADATA = CONSTANTS['CUSTOM_ROUTE_ARGS_METADATA'],
+  CUSTOM_ROUTE_AGRS_METADATA = CONSTANTS["CUSTOM_ROUTE_ARGS_METADATA"],
   INTERCEPTORS_METADATA,
   METHOD_METADATA,
   PARAMTYPES_METADATA,
@@ -107,7 +107,10 @@ export class R {
    * @param pipes
    * @returns
    */
-  static setBodyArg(index: number, /* istanbul ignore next */ pipes: any[] = []) {
+  static setBodyArg(
+    index: number,
+    /* istanbul ignore next */ pipes: any[] = [],
+  ) {
     return R.createRouteArg(RouteParamtypes.BODY, index, pipes);
   }
 
@@ -165,7 +168,9 @@ export class R {
   }
 
   static getRouteArgsTypes(target: any, name: string): any[] {
-    return R.get(PARAMTYPES_METADATA, target, name) || /* istanbul ignore next */ [];
+    return (
+      R.get(PARAMTYPES_METADATA, target, name) || /* istanbul ignore next */ []
+    );
   }
 
   static getParsedBody(func: Function): any {

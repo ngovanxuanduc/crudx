@@ -1,10 +1,10 @@
-import { Controller } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { Controller } from "@nestjs/common";
+import { ApiTags } from "@nestjs/swagger";
 
-import { Crud, OperatorsOptions, CustomOperators } from '@dataui/crud';
+import { Crud, OperatorsOptions, CustomOperators } from "@crudx/crud";
 
-import { Project } from './project.entity';
-import { ProjectsService } from './projects.service';
+import { Project } from "./project.entity";
+import { ProjectsService } from "./projects.service";
 
 @Crud({
   model: {
@@ -12,12 +12,12 @@ import { ProjectsService } from './projects.service';
   },
   params: {
     companyId: {
-      field: 'companyId',
-      type: 'number',
+      field: "companyId",
+      type: "number",
     },
     id: {
-      field: 'id',
-      type: 'number',
+      field: "id",
+      type: "number",
       primary: true,
     },
   },
@@ -27,11 +27,15 @@ import { ProjectsService } from './projects.service';
     },
   },
   operators: {
-    custom: { custom: {query: (field: string, param: string) => `${field} = :${param}`}}
-  }
+    custom: {
+      custom: {
+        query: (field: string, param: string) => `${field} = :${param}`,
+      },
+    },
+  },
 })
-@ApiTags('projects')
-@Controller('/companies/:companyId/projects')
+@ApiTags("projects")
+@Controller("/companies/:companyId/projects")
 export class ProjectsController {
   constructor(public service: ProjectsService) {}
 }

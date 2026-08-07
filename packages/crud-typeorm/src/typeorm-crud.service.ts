@@ -8,7 +8,7 @@ import {
   JoinOption,
   JoinOptions,
   QueryOptions,
-} from '@dataui/crud';
+} from "@crudx/crud";
 import {
   ComparisonOperator,
   ParsedRequestParams,
@@ -17,7 +17,7 @@ import {
   QuerySort,
   SCondition,
   SConditionKey,
-} from '@dataui/crud-request';
+} from "@crudx/crud-request";
 import {
   ClassType,
   hasLength,
@@ -27,9 +27,9 @@ import {
   isObject,
   isUndefined,
   objKeys,
-} from '@dataui/crud-util';
-import { oO } from '@zmotivat0r/o0';
-import { plainToClass } from 'class-transformer';
+} from "@crudx/crud-util";
+import { oO } from "@zmotivat0r/o0";
+import { plainToClass } from "class-transformer";
 import {
   Brackets,
   ColumnType,
@@ -40,7 +40,7 @@ import {
   Repository,
   SelectQueryBuilder,
   WhereExpressionBuilder,
-} from 'typeorm';
+} from "typeorm";
 
 interface IAllowedRelation {
   alias?: string;
@@ -53,7 +53,7 @@ interface IAllowedRelation {
 }
 
 export class TypeOrmCrudService<T> extends CrudService<T, DeepPartial<T>> {
-  protected dbName: ConnectionOptions['type'];
+  protected dbName: ConnectionOptions["type"];
   protected entityColumns: string[];
   protected entityPrimaryColumns: string[];
   protected entityHasDeleteColumn: boolean = false;
@@ -73,19 +73,19 @@ export class TypeOrmCrudService<T> extends CrudService<T, DeepPartial<T>> {
     this.onInitMapEntityColumns();
   }
 
-  public get findOne(): Repository<T>['findOne'] {
+  public get findOne(): Repository<T>["findOne"] {
     return this.repo.findOne.bind(this.repo);
   }
 
-  public get findOneBy(): Repository<T>['findOneBy'] {
+  public get findOneBy(): Repository<T>["findOneBy"] {
     return this.repo.findOneBy.bind(this.repo);
   }
 
-  public get find(): Repository<T>['find'] {
+  public get find(): Repository<T>["find"] {
     return this.repo.find.bind(this.repo);
   }
 
-  public get count(): Repository<T>['count'] {
+  public get count(): Repository<T>["count"] {
     return this.repo.count.bind(this.repo);
   }
 
@@ -101,7 +101,9 @@ export class TypeOrmCrudService<T> extends CrudService<T, DeepPartial<T>> {
    * Get many
    * @param req
    */
-  public async getMany(req: CrudRequest): Promise<GetManyDefaultResponse<T> | T[]> {
+  public async getMany(
+    req: CrudRequest,
+  ): Promise<GetManyDefaultResponse<T> | T[]> {
     const { parsed, options } = req;
     const builder = await this.createBuilder(parsed, options);
     return this.doGetMany(builder, parsed, options);
@@ -181,7 +183,8 @@ export class TypeOrmCrudService<T> extends CrudService<T, DeepPartial<T>> {
    * @param dto
    */
   public async updateOne(req: CrudRequest, dto: DeepPartial<T>): Promise<T> {
-    const { allowParamsOverride, returnShallow } = req.options.routes.updateOneBase;
+    const { allowParamsOverride, returnShallow } =
+      req.options.routes.updateOneBase;
     const paramsFilters = this.getParamFilters(req.parsed);
     // disable cache while updating
     req.options.query.cache = false;
@@ -227,13 +230,19 @@ export class TypeOrmCrudService<T> extends CrudService<T, DeepPartial<T>> {
    * @param dto
    */
   public async replaceOne(req: CrudRequest, dto: DeepPartial<T>): Promise<T> {
-    const { allowParamsOverride, returnShallow } = req.options.routes.replaceOneBase;
+    const { allowParamsOverride, returnShallow } =
+      req.options.routes.replaceOneBase;
     const paramsFilters = this.getParamFilters(req.parsed);
     // disable cache while replacing
     req.options.query.cache = false;
     const [_, found] = await oO(this.getOneOrFail(req, returnShallow));
     const toSave = !allowParamsOverride
-      ? { ...(found || {}), ...dto, ...paramsFilters, ...req.parsed.authPersist }
+      ? {
+          ...(found || {}),
+          ...dto,
+          ...paramsFilters,
+          ...req.parsed.authPersist,
+        }
       : {
           ...(found || /* istanbul ignore next */ {}),
           ...paramsFilters,
@@ -276,7 +285,11 @@ export class TypeOrmCrudService<T> extends CrudService<T, DeepPartial<T>> {
     req.options.query.cache = false;
     const found = await this.getOneOrFail(req, returnDeleted);
     const toReturn = returnDeleted
-      ? plainToClass(this.entityType, { ...found }, req.parsed.classTransformOptions)
+      ? plainToClass(
+          this.entityType,
+          { ...found },
+          req.parsed.classTransformOptions,
+        )
       : undefined;
     const deleted =
       req.options.query.softDelete === true
@@ -285,7 +298,7 @@ export class TypeOrmCrudService<T> extends CrudService<T, DeepPartial<T>> {
     return toReturn;
   }
 
-  public getParamFilters(parsed: CrudRequest['parsed']): ObjectLiteral {
+  public getParamFilters(parsed: CrudRequest["parsed"]): ObjectLiteral {
     const filters = {};
 
     /* istanbul ignore else */
@@ -337,7 +350,9 @@ export class TypeOrmCrudService<T> extends CrudService<T, DeepPartial<T>> {
       for (let i = 0; i < allowedJoins.length; i++) {
         /* istanbul ignore else */
         if (joinOptions[allowedJoins[i]].eager) {
-          const cond = parsed.join.find((j) => j && j.field === allowedJoins[i]) || {
+          const cond = parsed.join.find(
+            (j) => j && j.field === allowedJoins[i],
+          ) || {
             field: allowedJoins[i],
           };
           this.setJoin(cond, joinOptions, builder);
@@ -439,7 +454,11 @@ export class TypeOrmCrudService<T> extends CrudService<T, DeepPartial<T>> {
       : await this.createBuilder(parsed, options, true, withDeleted);
 
     if (shallow) {
-      this.setSearchCondition(builder, parsed.search, options.operators?.custom);
+      this.setSearchCondition(
+        builder,
+        parsed.search,
+        options.operators?.custom,
+      );
     }
 
     const found = withDeleted
@@ -455,7 +474,7 @@ export class TypeOrmCrudService<T> extends CrudService<T, DeepPartial<T>> {
 
   protected prepareEntityBeforeSave(
     dto: DeepPartial<T>,
-    parsed: CrudRequest['parsed'],
+    parsed: CrudRequest["parsed"],
   ): T {
     /* istanbul ignore if */
     if (!isObject(dto)) {
@@ -482,7 +501,10 @@ export class TypeOrmCrudService<T> extends CrudService<T, DeepPartial<T>> {
         );
   }
 
-  protected getAllowedColumns(columns: string[], options: QueryOptions): string[] {
+  protected getAllowedColumns(
+    columns: string[],
+    options: QueryOptions,
+  ): string[] {
     return (!options.exclude || !options.exclude.length) &&
       (!options.allow || /* istanbul ignore next */ !options.allow.length)
       ? columns
@@ -511,7 +533,10 @@ export class TypeOrmCrudService<T> extends CrudService<T, DeepPartial<T>> {
     return { columns, primaryColumns };
   }
 
-  protected getRelationMetadata(field: string, options: JoinOption): IAllowedRelation {
+  protected getRelationMetadata(
+    field: string,
+    options: JoinOption,
+  ): IAllowedRelation {
     try {
       let allowedRelation;
       let nested = false;
@@ -519,7 +544,7 @@ export class TypeOrmCrudService<T> extends CrudService<T, DeepPartial<T>> {
       if (this.entityRelationsHash.has(field)) {
         allowedRelation = this.entityRelationsHash.get(field);
       } else {
-        const fields = field.split('.');
+        const fields = field.split(".");
         let relationMetadata: EntityMetadata;
         let name: string;
         let path: string;
@@ -537,7 +562,7 @@ export class TypeOrmCrudService<T> extends CrudService<T, DeepPartial<T>> {
           }
         } else {
           nested = true;
-          parentPath = '';
+          parentPath = "";
 
           const reduced = fields.reduce(
             (res, propertyName: string, i) => {
@@ -545,7 +570,9 @@ export class TypeOrmCrudService<T> extends CrudService<T, DeepPartial<T>> {
                 ? res.relations.find((one) => one.propertyName === propertyName)
                 : null;
               relationMetadata = found ? found.inverseEntityMetadata : null;
-              const relations = relationMetadata ? relationMetadata.relations : [];
+              const relations = relationMetadata
+                ? relationMetadata.relations
+                : [];
               name = propertyName;
 
               if (i !== fields.length - 1) {
@@ -569,10 +596,12 @@ export class TypeOrmCrudService<T> extends CrudService<T, DeepPartial<T>> {
         }
 
         if (relationMetadata) {
-          const { columns, primaryColumns } = this.getEntityColumns(relationMetadata);
+          const { columns, primaryColumns } =
+            this.getEntityColumns(relationMetadata);
 
           if (!path && parentPath) {
-            const parentAllowedRelation = this.entityRelationsHash.get(parentPath);
+            const parentAllowedRelation =
+              this.entityRelationsHash.get(parentPath);
 
             /* istanbul ignore next */
             if (parentAllowedRelation) {
@@ -594,7 +623,10 @@ export class TypeOrmCrudService<T> extends CrudService<T, DeepPartial<T>> {
       }
 
       if (allowedRelation) {
-        const allowedColumns = this.getAllowedColumns(allowedRelation.columns, options);
+        const allowedColumns = this.getAllowedColumns(
+          allowedRelation.columns,
+          options,
+        );
         const toSave: IAllowedRelation = { ...allowedRelation, allowedColumns };
 
         this.entityRelationsHash.set(field, toSave);
@@ -611,7 +643,9 @@ export class TypeOrmCrudService<T> extends CrudService<T, DeepPartial<T>> {
     }
   }
 
-  private convertArrayToQuery(data: { str: string; params: { [key: string]: any } }[]): {
+  private convertArrayToQuery(
+    data: { str: string; params: { [key: string]: any } }[],
+  ): {
     str: string;
     params: { [key: string]: any };
   } {
@@ -624,7 +658,7 @@ export class TypeOrmCrudService<T> extends CrudService<T, DeepPartial<T>> {
       Object.assign(params, itemParams);
     }
 
-    const combinedString = queryStringParts.join(' AND ');
+    const combinedString = queryStringParts.join(" AND ");
 
     return { str: combinedString, params };
   }
@@ -641,8 +675,8 @@ export class TypeOrmCrudService<T> extends CrudService<T, DeepPartial<T>> {
         'relation "' +
           cond.field +
           '" not found in allowed relations in the controller. Did you mean to use one of these? [' +
-          Object.keys(joinOptions).join(', ') +
-          ']',
+          Object.keys(joinOptions).join(", ") +
+          "]",
       );
       return true;
     }
@@ -653,7 +687,7 @@ export class TypeOrmCrudService<T> extends CrudService<T, DeepPartial<T>> {
       return true;
     }
 
-    const relationType = options.required ? 'innerJoin' : 'leftJoin';
+    const relationType = options.required ? "innerJoin" : "leftJoin";
     const alias = options.alias ? options.alias : allowedRelation.name;
 
     if (cond.on) {
@@ -669,7 +703,9 @@ export class TypeOrmCrudService<T> extends CrudService<T, DeepPartial<T>> {
     if (options.select !== false) {
       const columns = isArrayFull(cond.select)
         ? cond.select.filter((column) =>
-            allowedRelation.allowedColumns.some((allowed) => allowed === column),
+            allowedRelation.allowedColumns.some(
+              (allowed) => allowed === column,
+            ),
           )
         : allowedRelation.allowedColumns;
 
@@ -717,7 +753,7 @@ export class TypeOrmCrudService<T> extends CrudService<T, DeepPartial<T>> {
     builder: SelectQueryBuilder<T>,
     search: SCondition,
     customOperators: CustomOperators,
-    condition: SConditionKey = '$and',
+    condition: SConditionKey = "$and",
   ) {
     /* istanbul ignore else */
     if (isObject(search)) {
@@ -731,7 +767,7 @@ export class TypeOrmCrudService<T> extends CrudService<T, DeepPartial<T>> {
             condition,
             new Brackets((qb: any) => {
               search.$not.forEach((item: any) => {
-                this.setSearchCondition(qb, item, customOperators, '$and');
+                this.setSearchCondition(qb, item, customOperators, "$and");
               });
             }),
             true,
@@ -741,7 +777,12 @@ export class TypeOrmCrudService<T> extends CrudService<T, DeepPartial<T>> {
         else if (isArrayFull(search.$and)) {
           // search: {$and: [{}]}
           if (search.$and.length === 1) {
-            this.setSearchCondition(builder, search.$and[0], customOperators, condition);
+            this.setSearchCondition(
+              builder,
+              search.$and[0],
+              customOperators,
+              condition,
+            );
           }
           // search: {$and: [{}, {}, ...]}
           else {
@@ -750,7 +791,7 @@ export class TypeOrmCrudService<T> extends CrudService<T, DeepPartial<T>> {
               condition,
               new Brackets((qb: any) => {
                 search.$and.forEach((item: any) => {
-                  this.setSearchCondition(qb, item, customOperators, '$and');
+                  this.setSearchCondition(qb, item, customOperators, "$and");
                 });
               }),
             );
@@ -762,7 +803,12 @@ export class TypeOrmCrudService<T> extends CrudService<T, DeepPartial<T>> {
           if (keys.length === 1) {
             // search: {$or: [{}]}
             if (search.$or.length === 1) {
-              this.setSearchCondition(builder, search.$or[0], customOperators, condition);
+              this.setSearchCondition(
+                builder,
+                search.$or[0],
+                customOperators,
+                condition,
+              );
             }
             // search: {$or: [{}, {}, ...]}
             else {
@@ -771,7 +817,7 @@ export class TypeOrmCrudService<T> extends CrudService<T, DeepPartial<T>> {
                 condition,
                 new Brackets((qb: any) => {
                   search.$or.forEach((item: any) => {
-                    this.setSearchCondition(qb, item, customOperators, '$or');
+                    this.setSearchCondition(qb, item, customOperators, "$or");
                   });
                 }),
               );
@@ -784,14 +830,20 @@ export class TypeOrmCrudService<T> extends CrudService<T, DeepPartial<T>> {
               condition,
               new Brackets((qb: any) => {
                 keys.forEach((field: string) => {
-                  if (field !== '$or') {
+                  if (field !== "$or") {
                     const value = search[field];
                     if (!isObject(value)) {
-                      this.builderSetWhere(qb, '$and', field, value, customOperators);
+                      this.builderSetWhere(
+                        qb,
+                        "$and",
+                        field,
+                        value,
+                        customOperators,
+                      );
                     } else {
                       this.setSearchFieldObjectCondition(
                         qb,
-                        '$and',
+                        "$and",
                         field,
                         value,
                         customOperators,
@@ -803,15 +855,20 @@ export class TypeOrmCrudService<T> extends CrudService<T, DeepPartial<T>> {
                         builder,
                         search.$or[0],
                         customOperators,
-                        '$and',
+                        "$and",
                       );
                     } else {
                       this.builderAddBrackets(
                         qb,
-                        '$and',
+                        "$and",
                         new Brackets((qb2: any) => {
                           search.$or.forEach((item: any) => {
-                            this.setSearchCondition(qb2, item, customOperators, '$or');
+                            this.setSearchCondition(
+                              qb2,
+                              item,
+                              customOperators,
+                              "$or",
+                            );
                           });
                         }),
                       );
@@ -829,7 +886,13 @@ export class TypeOrmCrudService<T> extends CrudService<T, DeepPartial<T>> {
             const field = keys[0];
             const value = search[field];
             if (!isObject(value)) {
-              this.builderSetWhere(builder, condition, field, value, customOperators);
+              this.builderSetWhere(
+                builder,
+                condition,
+                field,
+                value,
+                customOperators,
+              );
             } else {
               this.setSearchFieldObjectCondition(
                 builder,
@@ -849,11 +912,17 @@ export class TypeOrmCrudService<T> extends CrudService<T, DeepPartial<T>> {
                 keys.forEach((field: string) => {
                   const value = search[field];
                   if (!isObject(value)) {
-                    this.builderSetWhere(qb, '$and', field, value, customOperators);
+                    this.builderSetWhere(
+                      qb,
+                      "$and",
+                      field,
+                      value,
+                      customOperators,
+                    );
                   } else {
                     this.setSearchFieldObjectCondition(
                       qb,
-                      '$and',
+                      "$and",
                       field,
                       value,
                       customOperators,
@@ -881,10 +950,12 @@ export class TypeOrmCrudService<T> extends CrudService<T, DeepPartial<T>> {
 
       (whereQueryBuilder as any).parentQueryBuilder = builder;
 
-      whereQueryBuilder.expressionMap.mainAlias = builder.expressionMap.mainAlias;
+      whereQueryBuilder.expressionMap.mainAlias =
+        builder.expressionMap.mainAlias;
       whereQueryBuilder.expressionMap.aliasNamePrefixingEnabled =
         builder.expressionMap.aliasNamePrefixingEnabled;
-      whereQueryBuilder.expressionMap.parameters = builder.expressionMap.parameters;
+      whereQueryBuilder.expressionMap.parameters =
+        builder.expressionMap.parameters;
       whereQueryBuilder.expressionMap.nativeParameters =
         builder.expressionMap.nativeParameters;
 
@@ -893,19 +964,20 @@ export class TypeOrmCrudService<T> extends CrudService<T, DeepPartial<T>> {
       brackets.whereFactory(whereQueryBuilder as any);
 
       const wheres = {
-        operator: 'brackets',
+        operator: "brackets",
         condition: whereQueryBuilder.expressionMap.wheres,
       };
 
-      const type = condition === '$and' ? 'and' : condition === '$or' ? 'or' : 'simple';
+      const type =
+        condition === "$and" ? "and" : condition === "$or" ? "or" : "simple";
       builder.expressionMap.wheres.push({
         type,
         condition: {
-          operator: 'not',
+          operator: "not",
           condition: wheres as any,
         },
       });
-    } else if (condition === '$and') {
+    } else if (condition === "$and") {
       builder.andWhere(brackets);
     } else {
       builder.orWhere(brackets);
@@ -918,7 +990,7 @@ export class TypeOrmCrudService<T> extends CrudService<T, DeepPartial<T>> {
     field: string,
     value: any,
     customOperators: CustomOperators,
-    operator: ComparisonOperator = '$eq',
+    operator: ComparisonOperator = "$eq",
   ) {
     const time = process.hrtime();
     // const index = `${field}${time[0]}${time[1]}`;
@@ -926,16 +998,16 @@ export class TypeOrmCrudService<T> extends CrudService<T, DeepPartial<T>> {
      * Correcting the Error [Invalid Column Name] or [ syntax error at or near \":\".]
      * When using filter or search in relational/nested entities.
      */
-    const safeFieldName = field.replace(/./g, '_');
+    const safeFieldName = field.replace(/./g, "_");
     const index = `${safeFieldName}${time[0]}${time[1]}`;
 
     const args = [
-      { field, operator: isNull(value) ? '$isnull' : operator, value },
+      { field, operator: isNull(value) ? "$isnull" : operator, value },
       index,
       builder,
       customOperators,
     ];
-    const fn = condition === '$and' ? this.setAndWhere : this.setOrWhere;
+    const fn = condition === "$and" ? this.setAndWhere : this.setOrWhere;
     fn.apply(this, args);
   }
 
@@ -950,10 +1022,17 @@ export class TypeOrmCrudService<T> extends CrudService<T, DeepPartial<T>> {
     if (isObject(object)) {
       const operators = objKeys(object);
 
-      if (operators.length === 1 && operators[0] !== '$or') {
+      if (operators.length === 1 && operators[0] !== "$or") {
         const operator = operators[0] as ComparisonOperator;
         const value = object[operator];
-        this.builderSetWhere(builder, condition, field, value, customOperators, operator);
+        this.builderSetWhere(
+          builder,
+          condition,
+          field,
+          value,
+          customOperators,
+          operator,
+        );
       } else {
         this.builderAddBrackets(
           builder,
@@ -962,7 +1041,7 @@ export class TypeOrmCrudService<T> extends CrudService<T, DeepPartial<T>> {
             operators.forEach((operator: ComparisonOperator) => {
               const value = object[operator];
 
-              if (operator !== '$or') {
+              if (operator !== "$or") {
                 this.builderSetWhere(
                   qb,
                   condition,
@@ -989,7 +1068,7 @@ export class TypeOrmCrudService<T> extends CrudService<T, DeepPartial<T>> {
                     new Brackets((qb2: any) => {
                       this.setSearchFieldObjectCondition(
                         qb2,
-                        '$or',
+                        "$or",
                         field,
                         object.$or,
                         customOperators,
@@ -1005,7 +1084,10 @@ export class TypeOrmCrudService<T> extends CrudService<T, DeepPartial<T>> {
     }
   }
 
-  protected getSelect(query: ParsedRequestParams, options: QueryOptions): string[] {
+  protected getSelect(
+    query: ParsedRequestParams,
+    options: QueryOptions,
+  ): string[] {
     const allowed = this.getAllowedColumns(this.entityColumns, options);
 
     const columns =
@@ -1028,14 +1110,14 @@ export class TypeOrmCrudService<T> extends CrudService<T, DeepPartial<T>> {
     return query.sort && query.sort.length
       ? this.mapSort(query.sort)
       : options.sort && options.sort.length
-      ? this.mapSort(options.sort)
-      : {};
+        ? this.mapSort(options.sort)
+        : {};
   }
 
   protected getFieldWithAlias(field: string, sort: boolean = false) {
     /* istanbul ignore next */
-    const i = ['mysql', 'mariadb'].includes(this.dbName) ? '`' : '"';
-    const cols = field.split('.');
+    const i = ["mysql", "mariadb"].includes(this.dbName) ? "`" : '"';
+    const cols = field.split(".");
 
     switch (cols.length) {
       case 1:
@@ -1044,13 +1126,15 @@ export class TypeOrmCrudService<T> extends CrudService<T, DeepPartial<T>> {
         }
 
         const dbColName =
-          this.entityColumnsHash[field] !== field ? this.entityColumnsHash[field] : field;
+          this.entityColumnsHash[field] !== field
+            ? this.entityColumnsHash[field]
+            : field;
 
         return `${i}${this.alias}${i}.${i}${dbColName}${i}`;
       case 2:
         return field;
       default:
-        return cols.slice(cols.length - 2, cols.length).join('.');
+        return cols.slice(cols.length - 2, cols.length).join(".");
     }
   }
 
@@ -1073,81 +1157,81 @@ export class TypeOrmCrudService<T> extends CrudService<T, DeepPartial<T>> {
   ): { str: string; params: ObjectLiteral } {
     const field = this.getFieldWithAlias(cond.field);
     const likeOperator =
-      this.dbName === 'postgres' ? 'ILIKE' : /* istanbul ignore next */ 'LIKE';
+      this.dbName === "postgres" ? "ILIKE" : /* istanbul ignore next */ "LIKE";
     let str: string;
     // NOTE: may be overridden by specific operators
     let params: ObjectLiteral = { [param]: cond.value };
 
-    if (cond.operator[0] !== '$') {
-      cond.operator = ('$' + cond.operator) as ComparisonOperator;
+    if (cond.operator[0] !== "$") {
+      cond.operator = ("$" + cond.operator) as ComparisonOperator;
     }
 
     switch (cond.operator) {
-      case '$eq':
+      case "$eq":
         str = `${field} = :${param}`;
         break;
 
-      case '$ne':
+      case "$ne":
         str = `${field} != :${param}`;
         break;
 
-      case '$gt':
+      case "$gt":
         str = `${field} > :${param}`;
         break;
 
-      case '$lt':
+      case "$lt":
         str = `${field} < :${param}`;
         break;
 
-      case '$gte':
+      case "$gte":
         str = `${field} >= :${param}`;
         break;
 
-      case '$lte':
+      case "$lte":
         str = `${field} <= :${param}`;
         break;
 
-      case '$starts':
+      case "$starts":
         str = `${field} LIKE :${param}`;
         params = { [param]: `${cond.value}%` };
         break;
 
-      case '$ends':
+      case "$ends":
         str = `${field} LIKE :${param}`;
         params = { [param]: `%${cond.value}` };
         break;
 
-      case '$cont':
+      case "$cont":
         str = `${field} LIKE :${param}`;
         params = { [param]: `%${cond.value}%` };
         break;
 
-      case '$excl':
+      case "$excl":
         str = `${field} NOT LIKE :${param}`;
         params = { [param]: `%${cond.value}%` };
         break;
 
-      case '$in':
+      case "$in":
         this.checkFilterIsArray(cond);
         str = `${field} IN (:...${param})`;
         break;
 
-      case '$notin':
+      case "$notin":
         this.checkFilterIsArray(cond);
         str = `${field} NOT IN (:...${param})`;
         break;
 
-      case '$isnull':
+      case "$isnull":
         str = `${field} IS NULL`;
         params = {};
         break;
 
-      case '$notnull':
+      case "$notnull":
         str = `${field} IS NOT NULL`;
         params = {};
         break;
 
-      case '$between':
+      case "$between":
         this.checkFilterIsArray(cond, cond.value.length !== 2);
         str = `${field} BETWEEN :${param}0 AND :${param}1`;
         params = {
@@ -1157,50 +1241,50 @@ export class TypeOrmCrudService<T> extends CrudService<T, DeepPartial<T>> {
         break;
 
       // case insensitive
-      case '$eqL':
+      case "$eqL":
         str = `LOWER(${field}) = :${param}`;
         break;
 
-      case '$neL':
+      case "$neL":
         str = `LOWER(${field}) != :${param}`;
         break;
 
-      case '$startsL':
+      case "$startsL":
         str = `LOWER(${field}) ${likeOperator} :${param}`;
         params = { [param]: `${cond.value}%` };
         break;
 
-      case '$endsL':
+      case "$endsL":
         str = `LOWER(${field}) ${likeOperator} :${param}`;
         params = { [param]: `%${cond.value}` };
         break;
 
-      case '$contL':
+      case "$contL":
         str = `LOWER(${field}) ${likeOperator} :${param}`;
         params = { [param]: `%${cond.value}%` };
         break;
 
-      case '$exclL':
+      case "$exclL":
         str = `LOWER(${field}) NOT ${likeOperator} :${param}`;
         params = { [param]: `%${cond.value}%` };
         break;
 
-      case '$inL':
+      case "$inL":
         this.checkFilterIsArray(cond);
         str = `LOWER(${field}) IN (:...${param})`;
         break;
 
-      case '$notinL':
+      case "$notinL":
         this.checkFilterIsArray(cond);
         str = `LOWER(${field}) NOT IN (:...${param})`;
         break;
 
-      case '$contArr':
+      case "$contArr":
         this.checkFilterIsArray(cond);
         str = `${field} @> ARRAY[:...${param}]::${this.getColumnType(cond.field)}[]`;
         break;
 
-      case '$intersectsArr':
+      case "$intersectsArr":
         this.checkFilterIsArray(cond);
         str = `${field} && ARRAY[:...${param}]::${this.getColumnType(cond.field)}[]`;
         break;
@@ -1222,7 +1306,9 @@ export class TypeOrmCrudService<T> extends CrudService<T, DeepPartial<T>> {
             params = customOperator.params;
           }
         } catch (error) {
-          this.throwBadRequestException(`Invalid custom operator '${field}' query`);
+          this.throwBadRequestException(
+            `Invalid custom operator '${field}' query`,
+          );
         }
         break;
     }
@@ -1256,7 +1342,9 @@ export class TypeOrmCrudService<T> extends CrudService<T, DeepPartial<T>> {
   }
 
   protected getColumnType(field: string): ColumnType {
-    const column = this.repo.metadata.ownColumns.find((col) => col.propertyName === field);
+    const column = this.repo.metadata.ownColumns.find(
+      (col) => col.propertyName === field,
+    );
     return column.type;
   }
 }

@@ -7,7 +7,7 @@ nav_order: 20
 
 ## Description
 
-**DataUI/crud** provides a full range of path and query parameters parsing/validation to help you build rich RESTful APIs. [**@dataui/crud-request**](https://www.npmjs.com/package/@dataui/crud-request) is responsible for that.
+**crudx/crud** provides a full range of path and query parameters parsing/validation to help you build rich RESTful APIs. [**@crudx/crud-request**](https://www.npmjs.com/package/@crudx/crud-request) is responsible for that.
 
 ## Table of Contents
 
@@ -51,7 +51,7 @@ By default, we support these param names:
 
 `cache` - reset cache (if was enabled) and receive resources directly from the DB
 
-**_Notice:_** You can easily map your own query params names and chose another string delimiters by applying [global options](https://github.com/dataui/crud/wiki/Controllers#global-options).
+**_Notice:_** You can easily map your own query params names and chose another string delimiters by applying [global options](https://github.com/crudx/crud/wiki/Controllers#global-options).
 
 Here is the description of each of those using default params names:
 
@@ -196,7 +196,7 @@ _Examples:_
 
 ### join
 
-Receive joined relational objects in GET result (with all or selected fields). You can join as many relations as allowed in your [CrudOptions](https://github.com/dataui/crud/wiki/Controllers#join).
+Receive joined relational objects in GET result (with all or selected fields). You can join as many relations as allowed in your [CrudOptions](https://github.com/crudx/crud/wiki/Controllers#join).
 
 _Syntax:_
 
@@ -281,7 +281,7 @@ _Usage:_
 
 ## Frontend usage
 
-[**@dataui/crud-request**](https://www.npmjs.com/package/@dataui/crud-request) is a framework agnostic package that has been designed for both backend and frontend usage. It's also used by [**@dataui/crud**](https://www.npmjs.com/package/@dataui/crud) package in `CrudRequestInterceptor`.
+[**@crudx/crud-request**](https://www.npmjs.com/package/@crudx/crud-request) is a framework agnostic package that has been designed for both backend and frontend usage. It's also used by [**@crudx/crud**](https://www.npmjs.com/package/@crudx/crud) package in `CrudRequestInterceptor`.
 
 It has `RequestQueryBuilder` class that helps building a query string and customizing your query params names and delimiters.
 
@@ -290,22 +290,22 @@ It has `RequestQueryBuilder` class that helps building a query string and custom
 It has a static method `setOptions` that alows you to set different params names (defaults are shown):
 
 ```typescript
-import { RequestQueryBuilder } from '@dataui/crud-request';
+import { RequestQueryBuilder } from "@crudx/crud-request";
 
 RequestQueryBuilder.setOptions({
-  delim: '||',
-  delimStr: ',',
+  delim: "||",
+  delimStr: ",",
   paramNamesMap: {
-    fields: ['fields', 'select'],
-    search: 's',
-    filter: ['filter[]', 'filter'],
-    or: ['or[]', 'or'],
-    join: ['join[]', 'join'],
-    sort: ['sort[]', 'sort'],
-    limit: ['per_page', 'limit'],
-    offset: ['offset'],
-    page: ['page'],
-    cache: ['cache'],
+    fields: ["fields", "select"],
+    search: "s",
+    filter: ["filter[]", "filter"],
+    or: ["or[]", "or"],
+    join: ["join[]", "join"],
+    sort: ["sort[]", "sort"],
+    limit: ["per_page", "limit"],
+    offset: ["offset"],
+    page: ["page"],
+    cache: ["cache"],
   },
 });
 ```
@@ -315,7 +315,7 @@ RequestQueryBuilder.setOptions({
 You can compose a query string in a chaining methods manner:
 
 ```typescript
-import { RequestQueryBuilder, CondOperator } from "@dataui/crud-request";
+import { RequestQueryBuilder, CondOperator } from "@crudx/crud-request";
 
 const qb = RequestQueryBuilder.create();
 
@@ -369,10 +369,10 @@ Or, you can path all params to the `create` method:
 
 ```typescript
 const queryString = RequestQueryBuilder.create({
-  fields: ['name', 'email'],
+  fields: ["name", "email"],
   search: { isActive: true },
-  join: [{ field: 'company' }],
-  sort: [{ field: 'id', order: 'DESC' }],
+  join: [{ field: "company" }],
+  sort: [{ field: "id", order: "DESC" }],
   page: 1,
   limit: 25,
   resetCache: true,

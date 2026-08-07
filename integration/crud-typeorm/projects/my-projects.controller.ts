@@ -1,10 +1,10 @@
-import { Controller } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
-import { Crud, CrudAuth } from '@dataui/crud';
+import { Controller } from "@nestjs/common";
+import { ApiTags } from "@nestjs/swagger";
+import { Crud, CrudAuth } from "@crudx/crud";
 
-import { User } from '../users/user.entity';
-import { UserProject } from './user-project.entity';
-import { UserProjectsService } from './user-projects.service';
+import { User } from "../users/user.entity";
+import { UserProject } from "./user-project.entity";
+import { UserProjectsService } from "./user-projects.service";
 
 @Crud({
   model: {
@@ -12,8 +12,8 @@ import { UserProjectsService } from './user-projects.service';
   },
   params: {
     projectId: {
-      field: 'projectId',
-      type: 'number',
+      field: "projectId",
+      type: "number",
       primary: true,
     },
   },
@@ -33,8 +33,8 @@ import { UserProjectsService } from './user-projects.service';
     userId: user.id,
   }),
 })
-@ApiTags('my-projects')
-@Controller('my-projects')
+@ApiTags("my-projects")
+@Controller("my-projects")
 export class MyProjectsController {
   constructor(public service: UserProjectsService) {}
 }

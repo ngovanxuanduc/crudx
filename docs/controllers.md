@@ -7,7 +7,7 @@ nav_order: 20
 
 ## Description
 
-[**@dataui/crud**](https://www.npmjs.com/package/@dataui/crud) - core package which provides `@Crud()` controller decorator for endpoints generation, global configuration, validation, helper decorators.
+[**@crudx/crud**](https://www.npmjs.com/package/@crudx/crud) - core package which provides `@Crud()` controller decorator for endpoints generation, global configuration, validation, helper decorators.
 
 ## Table of Contents
 
@@ -35,23 +35,23 @@ nav_order: 20
 ## Install
 
 ```shell
-npm i @dataui/crud class-transformer class-validator
+npm i @crudx/crud class-transformer class-validator
 ```
 
 ### Using TypeORM
 
 ```shell
-npm i @dataui/crud-typeorm @nestjs/typeorm typeorm
+npm i @crudx/crud-typeorm @nestjs/typeorm typeorm
 ```
 
 ## Getting started
 
-Let's take a look at the example of using `@dataui/crud` with TypeORM.
+Let's take a look at the example of using `@crudx/crud` with TypeORM.
 
 Assume we have some TypeORM **entity**:
 
 ```typescript
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
 @Entity()
 export class Company {
@@ -64,11 +64,11 @@ export class Company {
 Then we need to create a **service**:
 
 ```typescript
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { TypeOrmCrudService } from '@dataui/crud-typeorm';
+import { Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { TypeOrmCrudService } from "@crudx/crud-typeorm";
 
-import { Company } from './company.entity';
+import { Company } from "./company.entity";
 
 @Injectable()
 export class CompaniesService extends TypeOrmCrudService<Company> {
@@ -81,18 +81,18 @@ export class CompaniesService extends TypeOrmCrudService<Company> {
 We've done with the service so let's create a **controller**:
 
 ```typescript
-import { Controller } from '@nestjs/common';
-import { Crud, CrudController } from '@dataui/crud';
+import { Controller } from "@nestjs/common";
+import { Crud, CrudController } from "@crudx/crud";
 
-import { Company } from './company.entity';
-import { CompaniesService } from './companies.service';
+import { Company } from "./company.entity";
+import { CompaniesService } from "./companies.service";
 
 @Crud({
   model: {
     type: Company,
   },
 })
-@Controller('companies')
+@Controller("companies")
 export class CompaniesController implements CrudController<Company> {
   constructor(public service: CompaniesService) {}
 }
@@ -101,12 +101,12 @@ export class CompaniesController implements CrudController<Company> {
 All we have to do next is to connect our service and controller in the `CompaniesModule` as we usually do:
 
 ```typescript
-import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { Module } from "@nestjs/common";
+import { TypeOrmModule } from "@nestjs/typeorm";
 
-import { Company } from './company.entity';
-import { CompaniesService } from './companies.service';
-import { CompaniesController } from './companies.controller';
+import { Company } from "./company.entity";
+import { CompaniesService } from "./companies.service";
+import { CompaniesController } from "./companies.controller";
 
 @Module({
   imports: [TypeOrmModule.forFeature([Company])],
@@ -288,7 +288,7 @@ Also, you can disable `id` param if you want to have only few routs without any 
     type: User,
   },
   routes: {
-    only: ['getOneBase', 'updateOneBase'],
+    only: ["getOneBase", "updateOneBase"],
   },
   params: {
     id: {
@@ -308,12 +308,12 @@ Also, you can disable `id` param if you want to have only few routs without any 
   },
 })
 @CrudAuth({
-  property: 'user',
+  property: "user",
   filter: (user: User) => ({
     id: user.id,
   }),
 })
-@Controller('me')
+@Controller("me")
 export class MeController {
   constructor(public service: UsersService) {}
 }
@@ -408,7 +408,7 @@ It's a set of query options for GET request.
 
 ```typescript
 {
-  allow: ['name', 'email'];
+  allow: ["name", "email"];
 }
 ```
 
@@ -420,7 +420,7 @@ An Array of fields that are allowed to be received in GET requests. If empty or 
 
 ```typescript
 {
-  exclude: ['accessToken'];
+  exclude: ["accessToken"];
 }
 ```
 
@@ -432,7 +432,7 @@ An Array of fields that will be excluded from the GET response (and not queried 
 
 ```typescript
 {
-  persist: ['createdAt'];
+  persist: ["createdAt"];
 }
 ```
 
@@ -464,8 +464,8 @@ This option can be used in two scenarios:
 {
   filter: [
     {
-      field: 'isActive',
-      operator: '$ne',
+      field: "isActive",
+      operator: "$ne",
       value: false,
     },
   ];
@@ -497,7 +497,7 @@ This option can be used in two scenarios:
 - Transform query search conditions:
 
 ```typescript
-import { SCondition } from '@dataui/crud-request'
+import { SCondition } from '@crudx/crud-request'
 
 ...
 
@@ -570,8 +570,8 @@ Each relation option can have (all below are optional):
 {
   sort: [
     {
-      field: 'id',
-      order: 'DESC',
+      field: "id",
+      order: "DESC",
     },
   ];
 }
@@ -717,7 +717,7 @@ In order to reduce some repetition in your `CrudOptions` in every controller you
 }
 ```
 
-`queryParser` are options for `RequestQueryParser` that is being used in `CrudRequestInterceptor` to parse/validate query and path params. Frontend has similar [customization](https://github.com/dataui/crud/wiki/Requests#customize) ability.
+`queryParser` are options for `RequestQueryParser` that is being used in `CrudRequestInterceptor` to parse/validate query and path params. Frontend has similar [customization](https://github.com/crudx/crud/wiki/Requests#customize) ability.
 
 `routes` are the same as [here](#routes).
 
@@ -730,7 +730,7 @@ In order to reduce some repetition in your `CrudOptions` in every controller you
 So in order to apply global options you need load them in your **main.ts (index.ts) file BEFORE you import `AppModule` class**. That's because TypeScript decorators are executed when we declare our class but not when we create new class instance. So in your `main.ts`:
 
 ```typescript
-import { CrudConfigService } from '@dataui/crud';
+import { CrudConfigService } from '@crudx/crud';
 
 CrudConfigService.load({
   query: {
@@ -776,11 +776,11 @@ In order to perform data filtering for authenticated requests, we provide `@Crud
 
 `property` - property on the `Request` object where user's data stored after successful authentication. Can be set [globally](#global-options) as well.
 
-`filter` - a function that should return [search](https://github.com/dataui/crud/wiki/Requests#search) condition and will be added to the query search params and path params as a `$and` condition:
+`filter` - a function that should return [search](https://github.com/crudx/crud/wiki/Requests#search) condition and will be added to the query search params and path params as a `$and` condition:
 
 > `{Auth condition} AND {Path params} AND {Search|Filter}`
 
-`or` - a function that should return [search](https://github.com/dataui/crud/wiki/Requests#search) condition and will be added to the query search params and path params as a `$or` condition. If it's used then `filter` function will be ignored.
+`or` - a function that should return [search](https://github.com/crudx/crud/wiki/Requests#search) condition and will be added to the query search params and path params as a `$or` condition. If it's used then `filter` function will be ignored.
 
 > `{Auth condition} OR ({Path params} AND {Search|Filter})`
 
@@ -810,36 +810,36 @@ You can use [`CrudOptions.model.type`](#model) as a DTO that describes validatio
 Let's take a look at this example:
 
 ```typescript
-import { Entity, Column, OneToMany } from 'typeorm';
-import { IsOptional, IsString, MaxLength, IsNotEmpty } from 'class-validator';
-import { Type } from 'class-transformer';
-import { CrudValidationGroups } from '@dataui/crud';
+import { Entity, Column, OneToMany } from "typeorm";
+import { IsOptional, IsString, MaxLength, IsNotEmpty } from "class-validator";
+import { Type } from "class-transformer";
+import { CrudValidationGroups } from "@crudx/crud";
 
-import { BaseEntity } from '../base-entity';
-import { User } from '../users/user.entity';
-import { Project } from '../projects/project.entity';
+import { BaseEntity } from "../base-entity";
+import { User } from "../users/user.entity";
+import { Project } from "../projects/project.entity";
 
 const { CREATE, UPDATE } = CrudValidationGroups;
 
-@Entity('companies')
+@Entity("companies")
 export class Company extends BaseEntity {
   @IsOptional({ groups: [UPDATE] })
   @IsNotEmpty({ groups: [CREATE] })
   @IsString({ always: true })
   @MaxLength(100, { always: true })
-  @Column({ type: 'varchar', length: 100, nullable: false })
+  @Column({ type: "varchar", length: 100, nullable: false })
   name: string;
 
   @IsOptional({ groups: [UPDATE] })
   @IsNotEmpty({ groups: [CREATE] })
   @IsString({ groups: [CREATE, UPDATE] })
   @MaxLength(100, { groups: [CREATE, UPDATE] })
-  @Column({ type: 'varchar', length: 100, nullable: false, unique: true })
+  @Column({ type: "varchar", length: 100, nullable: false, unique: true })
   domain: string;
 
   @IsOptional({ always: true })
   @IsString({ always: true })
-  @Column({ type: 'text', nullable: true, default: null })
+  @Column({ type: "text", nullable: true, default: null })
   description: string;
 
   /**
@@ -864,7 +864,7 @@ Serialization is performed using `class-transformer` package and is already incl
 So in your entity you can use some useful decorators:
 
 ```typescript
-import { Exclude } from 'class-transformer';
+import { Exclude } from "class-transformer";
 
 export class User {
   email: string;
@@ -886,7 +886,7 @@ Second, even after adding `CrudController` interface you still wouldn't see comp
 
 ```typescript
 ...
-import { Crud, CrudController } from '@dataui/crud';
+import { Crud, CrudController } from '@crudx/crud';
 
 @Crud(Hero)
 @Controller('heroes')
@@ -957,7 +957,7 @@ import {
   ParsedRequest,
   ParsedBody,
   CreateManyDto,
-} from '@dataui/crud';
+} from '@crudx/crud';
 
 @Crud({
   model: {
@@ -1040,7 +1040,7 @@ import {
   ParsedRequest,
   CrudRequest,
   CrudRequestInterceptor,
-} from '@dataui/crud';
+} from '@crudx/crud';
 ...
 
 @UseInterceptors(CrudRequestInterceptor)
@@ -1056,21 +1056,21 @@ There are two additional decorators that come out of the box: `@Feature()` and `
 
 ```typescript
 enum CrudActions {
-  ReadAll = 'Read-All',
-  ReadOne = 'Read-One',
-  CreateOne = 'Create-One',
-  CreateMany = 'Create-Many',
-  UpdateOne = 'Update-One',
-  ReplaceOne = 'Replace-One',
-  DeleteOne = 'Delete-One',
+  ReadAll = "Read-All",
+  ReadOne = "Read-One",
+  CreateOne = "Create-One",
+  CreateMany = "Create-Many",
+  UpdateOne = "Update-One",
+  ReplaceOne = "Replace-One",
+  DeleteOne = "Delete-One",
 }
 ```
 
 `ACLGuard` dummy example with helper functions `getFeature` and `getAction`:
 
 ```typescript
-import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
-import { getFeature, getAction } from '@dataui/crud';
+import { Injectable, CanActivate, ExecutionContext } from "@nestjs/common";
+import { getFeature, getAction } from "@crudx/crud";
 
 @Injectable()
 export class ACLGuard implements CanActivate {

@@ -4,7 +4,7 @@
 >
 > **Status:** 🚧 In Progress
 >
-> CRUDX là một fork của `dataui-nestjs-crud`, với mục tiêu xây dựng một framework CRUD hiện đại cho NestJS, hỗ trợ TypeORM mới nhất, dễ mở rộng và có kiến trúc rõ ràng hơn.
+> CRUDX là một fork của `crudx-nestjs-crud`, với mục tiêu xây dựng một framework CRUD hiện đại cho NestJS, hỗ trợ TypeORM mới nhất, dễ mở rộng và có kiến trúc rõ ràng hơn.
 
 ---
 
@@ -14,7 +14,7 @@ CRUDX hướng tới các mục tiêu sau:
 
 - Hỗ trợ NestJS phiên bản mới nhất.
 - Hỗ trợ TypeORM phiên bản mới nhất.
-- Backward compatible với phần lớn API của `dataui-nestjs-crud`.
+- Backward compatible với phần lớn API của `crudx-nestjs-crud`.
 - Cải thiện khả năng mở rộng.
 - Dễ bảo trì.
 - Có thể hỗ trợ nhiều ORM trong tương lai.
@@ -23,15 +23,15 @@ CRUDX hướng tới các mục tiêu sau:
 
 # Tech Stack
 
-| Component | Version |
-|------------|---------|
-| Node.js | >= 22 |
-| Yarn | 4.x |
-| TypeScript | 5.9 |
-| NestJS | 11 |
-| TypeORM | 1.x |
-| ESLint | 9 |
-| Changesets | Latest |
+| Component  | Version |
+| ---------- | ------- |
+| Node.js    | >= 22   |
+| Yarn       | 4.x     |
+| TypeScript | 5.9     |
+| NestJS     | 11      |
+| TypeORM    | 1.x     |
+| ESLint     | 9       |
+| Changesets | Latest  |
 
 ---
 
@@ -217,15 +217,13 @@ Ví dụ:
 
 ```ts
 interface CrudAdapter {
+  find();
 
-    find()
+  create();
 
-    create()
+  update();
 
-    update()
-
-    delete()
-
+  delete();
 }
 ```
 
@@ -393,10 +391,7 @@ Ví dụ:
 
 ```ts
 CrudModule.forRoot({
-    plugins: [
-        AuditPlugin,
-        TenantPlugin,
-    ],
+  plugins: [AuditPlugin, TenantPlugin],
 });
 ```
 

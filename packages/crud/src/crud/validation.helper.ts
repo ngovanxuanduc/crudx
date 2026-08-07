@@ -1,14 +1,18 @@
-import { ValidationPipe } from '@nestjs/common';
-import { isFalse, isNil } from '@dataui/crud-util';
-import { CrudValidationGroups } from '../enums';
-import { CreateManyDto, CrudOptions, MergedCrudOptions } from '../interfaces';
-import { safeRequire } from '../util';
-import { ApiProperty } from './swagger.helper';
+import { ValidationPipe } from "@nestjs/common";
+import { isFalse, isNil } from "@crudx/crud-util";
+import { CrudValidationGroups } from "../enums";
+import { CreateManyDto, CrudOptions, MergedCrudOptions } from "../interfaces";
+import { safeRequire } from "../util";
+import { ApiProperty } from "./swagger.helper";
 
 /** class-validator */
-const validator = safeRequire('class-validator', () => require('class-validator'));
+const validator = safeRequire("class-validator", () =>
+  require("class-validator"),
+);
 /** class-transformer */
-const transformer = safeRequire('class-transformer', () => require('class-transformer'));
+const transformer = safeRequire("class-transformer", () =>
+  require("class-transformer"),
+);
 
 class BulkDto<T> implements CreateManyDto<T> {
   bulk: T[];
@@ -69,7 +73,7 @@ export class Validation {
         bulk: T[];
       }
 
-      Object.defineProperty(BulkDtoImpl, 'name', {
+      Object.defineProperty(BulkDtoImpl, "name", {
         writable: false,
         value: `CreateMany${options.model.type.name}Dto`,
       });

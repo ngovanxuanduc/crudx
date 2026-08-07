@@ -1,14 +1,14 @@
-import { Controller } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
-import { Crud } from '@dataui/crud';
+import { Controller } from "@nestjs/common";
+import { ApiTags } from "@nestjs/swagger";
+import { Crud } from "@crudx/crud";
 
-import { Company } from './company.entity';
-import { CompaniesService } from './companies.service';
-import { serialize } from './responses';
+import { Company } from "./company.entity";
+import { CompaniesService } from "./companies.service";
+import { serialize } from "./responses";
 
 @Crud({
   model: {
-    type: Company
+    type: Company,
   },
   serialize,
   routes: {
@@ -19,21 +19,21 @@ import { serialize } from './responses';
   query: {
     alwaysPaginate: false,
     softDelete: true,
-    allow: ['name'],
+    allow: ["name"],
     join: {
       users: {
-        alias: 'companyUsers',
-        exclude: ['email'],
+        alias: "companyUsers",
+        exclude: ["email"],
         eager: true,
       },
-      'users.projects': {
+      "users.projects": {
         eager: true,
-        alias: 'usersProjects',
-        allow: ['name'],
+        alias: "usersProjects",
+        allow: ["name"],
       },
-      'users.projects.company': {
+      "users.projects.company": {
         eager: true,
-        alias: 'usersProjectsCompany',
+        alias: "usersProjectsCompany",
       },
       projects: {
         eager: true,
@@ -42,8 +42,8 @@ import { serialize } from './responses';
     },
   },
 })
-@ApiTags('companies')
-@Controller('companies')
+@ApiTags("companies")
+@Controller("companies")
 export class CompaniesController {
   constructor(public service: CompaniesService) {}
 }

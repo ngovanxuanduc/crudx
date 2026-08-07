@@ -1,11 +1,11 @@
-import { Controller } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
-import { Crud } from '@dataui/crud';
+import { Controller } from "@nestjs/common";
+import { ApiTags } from "@nestjs/swagger";
+import { Crud } from "@crudx/crud";
 
-import { Note } from './note.entity';
-import { NotesService } from './notes.service';
-import { dto } from './requests';
-import { serialize } from './responses';
+import { Note } from "./note.entity";
+import { NotesService } from "./notes.service";
+import { dto } from "./requests";
+import { serialize } from "./responses";
 
 @Crud({
   model: { type: Note },
@@ -15,8 +15,8 @@ import { serialize } from './responses';
     alwaysPaginate: true,
   },
 })
-@ApiTags('notes')
-@Controller('/notes')
+@ApiTags("notes")
+@Controller("/notes")
 export class NotesController {
   constructor(public service: NotesService) {}
 }

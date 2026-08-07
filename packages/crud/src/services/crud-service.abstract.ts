@@ -1,6 +1,6 @@
-import { BadRequestException, NotFoundException } from '@nestjs/common';
-import { ParsedRequestParams } from '@dataui/crud-request';
-import { objKeys } from '@dataui/crud-util';
+import { BadRequestException, NotFoundException } from "@nestjs/common";
+import { ParsedRequestParams } from "@crudx/crud-request";
+import { objKeys } from "@crudx/crud-util";
 
 import {
   CreateManyDto,
@@ -8,7 +8,7 @@ import {
   CrudRequestOptions,
   GetManyDefaultResponse,
   QueryOptions,
-} from '../interfaces';
+} from "../interfaces";
 
 export abstract class CrudService<T, DTO = T> {
   abstract getMany(req: CrudRequest): Promise<GetManyDefaultResponse<T> | T[]>;
@@ -64,7 +64,10 @@ export abstract class CrudService<T, DTO = T> {
    * @param parsed
    * @param options
    */
-  decidePagination(parsed: ParsedRequestParams, options: CrudRequestOptions): boolean {
+  decidePagination(
+    parsed: ParsedRequestParams,
+    options: CrudRequestOptions,
+  ): boolean {
     return (
       options.query.alwaysPaginate ||
       ((Number.isFinite(parsed.page) || Number.isFinite(parsed.offset)) &&
@@ -106,8 +109,8 @@ export abstract class CrudService<T, DTO = T> {
     return query.page && take
       ? take * (query.page - 1)
       : query.offset
-      ? query.offset
-      : null;
+        ? query.offset
+        : null;
   }
 
   /**

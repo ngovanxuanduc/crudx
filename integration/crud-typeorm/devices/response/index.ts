@@ -1,5 +1,5 @@
-import { SerializeOptions } from '@dataui/crud';
-import { DeleteDeviceResponseDto } from './delete-device-response.dto';
+import { SerializeOptions } from "@crudx/crud";
+import { DeleteDeviceResponseDto } from "./delete-device-response.dto";
 
 export const serialize: SerializeOptions = {
   delete: DeleteDeviceResponseDto,

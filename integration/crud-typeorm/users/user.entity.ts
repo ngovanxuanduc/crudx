@@ -7,7 +7,7 @@ import {
   ManyToOne,
   ManyToMany,
   DeleteDateColumn,
-} from 'typeorm';
+} from "typeorm";
 import {
   IsOptional,
   IsString,
@@ -16,16 +16,16 @@ import {
   IsEmail,
   IsBoolean,
   ValidateNested,
-} from 'class-validator';
-import { Type } from 'class-transformer';
-import { CrudValidationGroups } from '@dataui/crud';
+} from "class-validator";
+import { Type } from "class-transformer";
+import { CrudValidationGroups } from "@crudx/crud";
 
-import { BaseEntity } from '../base-entity';
-import { UserProfile } from '../users-profiles/user-profile.entity';
-import { UserLicense } from '../users-licenses/user-license.entity';
-import { Company } from '../companies/company.entity';
-import { Project } from '../projects/project.entity';
-import { UserProject } from '../projects/user-project.entity';
+import { BaseEntity } from "../base-entity";
+import { UserProfile } from "../users-profiles/user-profile.entity";
+import { UserLicense } from "../users-licenses/user-license.entity";
+import { Company } from "../companies/company.entity";
+import { Project } from "../projects/project.entity";
+import { UserProject } from "../projects/user-project.entity";
 
 const { CREATE, UPDATE } = CrudValidationGroups;
 
@@ -40,20 +40,20 @@ export class Name {
 }
 
 // tslint:disable-next-line:max-classes-per-file
-@Entity('users')
+@Entity("users")
 export class User extends BaseEntity {
   @IsOptional({ groups: [UPDATE] })
   @IsNotEmpty({ groups: [CREATE] })
   @IsString({ always: true })
   @MaxLength(255, { always: true })
   @IsEmail({ require_tld: false }, { always: true })
-  @Column({ type: 'varchar', length: 255, nullable: false, unique: true })
+  @Column({ type: "varchar", length: 255, nullable: false, unique: true })
   email: string;
 
   @IsOptional({ groups: [UPDATE] })
   @IsNotEmpty({ groups: [CREATE] })
   @IsBoolean({ always: true })
-  @Column({ type: 'boolean', default: true })
+  @Column({ type: "boolean", default: true })
   isActive: boolean;
 
   @Type((t) => Name)
@@ -89,7 +89,7 @@ export class User extends BaseEntity {
 
   @OneToMany((type) => UserProject, (el) => el.user, {
     persistence: false,
-    onDelete: 'CASCADE',
+    onDelete: "CASCADE",
   })
   userProjects?: UserProject[];
 

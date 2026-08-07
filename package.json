@@ -1,6 +1,6 @@
 {
-  "name": "@dataui/crud",
-  "version": "5.1.0",
+  "name": "@crudx/crud",
+  "version": "6.0.0",
   "description": "Nest CRUD for RESTful APIs",
   "license": "MIT",
   "workspaces": [
@@ -113,6 +113,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/gid-oss/dataui-nestjs-crud"
+    "url": "https://github.com/ngovanxuanduc/crudx"
   }
 }

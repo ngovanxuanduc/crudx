@@ -81,13 +81,13 @@
 
 ### Bug Fixes
 
-- **crud** - Fix select boolean type in join option [#4](https://github.com/dataui/crud/pull/4))
+- **crud** - Fix select boolean type in join option [#4](https://github.com/crudx/crud/pull/4))
 
 ## [5.0.14] - 2021-11-27
 
 ### Bug Fixes
 
-- **typeorm** - fixed cache - do not use cache when updating resources [#3](https://github.com/dataui/crud/pull/3))
+- **typeorm** - fixed cache - do not use cache when updating resources [#3](https://github.com/crudx/crud/pull/3))
 
 ## [5.0.13] - 2021-11-27
 

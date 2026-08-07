@@ -1,15 +1,15 @@
-import { Controller } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { Controller } from "@nestjs/common";
+import { ApiTags } from "@nestjs/swagger";
 import {
   Crud,
   CrudController,
   CrudRequest,
   ParsedRequest,
   Override,
-} from '@dataui/crud';
+} from "@crudx/crud";
 
-import { User } from './user.entity';
-import { UsersService } from './users.service';
+import { User } from "./user.entity";
+import { UsersService } from "./users.service";
 
 @Crud({
   model: {
@@ -17,12 +17,12 @@ import { UsersService } from './users.service';
   },
   params: {
     companyId: {
-      field: 'companyId',
-      type: 'number',
+      field: "companyId",
+      type: "number",
     },
     id: {
-      field: 'id',
-      type: 'number',
+      field: "id",
+      type: "number",
       primary: true,
     },
   },
@@ -30,21 +30,21 @@ import { UsersService } from './users.service';
     softDelete: true,
     join: {
       company: {
-        exclude: ['description'],
+        exclude: ["description"],
       },
-      'company.projects': {
-        alias: 'pr',
-        exclude: ['description'],
+      "company.projects": {
+        alias: "pr",
+        exclude: ["description"],
       },
       profile: {
         eager: true,
-        exclude: ['updatedAt'],
+        exclude: ["updatedAt"],
       },
     },
   },
 })
-@ApiTags('users')
-@Controller('/companies/:companyId/users')
+@ApiTags("users")
+@Controller("/companies/:companyId/users")
 export class UsersController implements CrudController<User> {
   constructor(public service: UsersService) {}
 
@@ -52,7 +52,7 @@ export class UsersController implements CrudController<User> {
     return this;
   }
 
-  @Override('getManyBase')
+  @Override("getManyBase")
   getAll(@ParsedRequest() req: CrudRequest) {
     return this.base.getManyBase(req);
   }

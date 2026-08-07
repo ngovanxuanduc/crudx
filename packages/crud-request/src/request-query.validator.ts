@@ -8,10 +8,10 @@ import {
   isStringFull,
   isUndefined,
   objKeys,
-} from '@dataui/crud-util';
+} from "@crudx/crud-util";
 
-import { RequestQueryException } from './exceptions';
-import { CustomOperators, ParamOption, ParamsOptions } from './interfaces';
+import { RequestQueryException } from "./exceptions";
+import { CustomOperators, ParamOption, ParamsOptions } from "./interfaces";
 import {
   ComparisonOperator,
   CondOperator,
@@ -19,45 +19,47 @@ import {
   QueryFilter,
   QueryJoin,
   QuerySort,
-} from './types';
+} from "./types";
 
 export const deprecatedComparisonOperatorsList = [
-  'eq',
-  'ne',
-  'gt',
-  'lt',
-  'gte',
-  'lte',
-  'starts',
-  'ends',
-  'cont',
-  'excl',
-  'in',
-  'notin',
-  'isnull',
-  'notnull',
-  'between',
-  'contArr',
-  'intersectsArr',
+  "eq",
+  "ne",
+  "gt",
+  "lt",
+  "gte",
+  "lte",
+  "starts",
+  "ends",
+  "cont",
+  "excl",
+  "in",
+  "notin",
+  "isnull",
+  "notnull",
+  "between",
+  "contArr",
+  "intersectsArr",
 ];
 export const comparisonOperatorsList = [
   ...deprecatedComparisonOperatorsList,
   ...objKeys(CondOperator).map((n) => CondOperator[n]),
 ];
 
-export const sortOrdersList = ['ASC', 'DESC'];
+export const sortOrdersList = ["ASC", "DESC"];
 
 const sortOrdersListStr = sortOrdersList.join();
 
 export function validateFields(fields: QueryFields): void {
   if (!isArrayStrings(fields)) {
-    throw new RequestQueryException('Invalid fields. Array of strings expected');
+    throw new RequestQueryException(
+      "Invalid fields. Array of strings expected",
+    );
   }
 }
 
 export function validateCondition(
   val: QueryFilter,
-  cond: 'filter' | 'or' | 'search',
+  cond: "filter" | "or" | "search",
   customOperators: CustomOperators,
 ): void {
   if (!isObject(val) || !isStringFull(val.field)) {
@@ -85,31 +87,35 @@ export function validateComparisonOperator(
 
 export function validateJoin(join: QueryJoin): void {
   if (!isObject(join) || !isStringFull(join.field)) {
-    throw new RequestQueryException('Invalid join field. String expected');
+    throw new RequestQueryException("Invalid join field. String expected");
   }
   if (!isUndefined(join.select) && !isArrayStrings(join.select)) {
-    throw new RequestQueryException('Invalid join select. Array of strings expected');
+    throw new RequestQueryException(
+      "Invalid join select. Array of strings expected",
+    );
   }
   if (!isUndefined(join.on) && !isArrayFull(join.on)) {
-    join.on.map((condition) => validateCondition(condition, 'filter', {}));
+    join.on.map((condition) => validateCondition(condition, "filter", {}));
   }
 }
 
 export function validateSort(sort: QuerySort): void {
   if (!isObject(sort) || !isStringFull(sort.field)) {
-    throw new RequestQueryException('Invalid sort field. String expected');
+    throw new RequestQueryException("Invalid sort field. String expected");
   }
   if (
     !isEqual(sort.order, sortOrdersList[0]) &&
     !isEqual(sort.order, sortOrdersList[1])
   ) {
-    throw new RequestQueryException(`Invalid sort order. ${sortOrdersListStr} expected`);
+    throw new RequestQueryException(
+      `Invalid sort order. ${sortOrdersListStr} expected`,
+    );
   }
 }
 
 export function validateNumeric(
   val: number,
-  num: 'limit' | 'offset' | 'page' | 'cache' | 'include_deleted' | string,
+  num: "limit" | "offset" | "page" | "cache" | "include_deleted" | string,
 ): void {
   if (!isNumber(val)) {
     throw new RequestQueryException(`Invalid ${num}. Number expected`);
@@ -118,7 +124,9 @@ export function validateNumeric(
 
 export function validateParamOption(options: ParamsOptions, name: string) {
   if (!isObject(options)) {
-    throw new RequestQueryException(`Invalid param ${name}. Invalid crud options`);
+    throw new RequestQueryException(
+      `Invalid param ${name}. Invalid crud options`,
+    );
   }
   const option = options[name];
   if (option && option.disabled) {
@@ -130,9 +138,13 @@ export function validateParamOption(options: ParamsOptions, name: string) {
 }
 
 export function validateUUID(str: string, name: string) {
-  const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-  const uuidV4 = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+  const uuid =
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+  const uuidV4 =
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
   if (!uuidV4.test(str) && !uuid.test(str)) {
-    throw new RequestQueryException(`Invalid param ${name}. UUID string expected`);
+    throw new RequestQueryException(
+      `Invalid param ${name}. UUID string expected`,
+    );
   }
 }

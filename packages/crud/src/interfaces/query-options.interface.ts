@@ -1,9 +1,9 @@
 import {
   QueryFields,
   QuerySort,
-} from '@dataui/crud-request/lib/types/request-query.types';
+} from "@crudx/crud-request/lib/types/request-query.types";
 
-import { QueryFilterOption } from '../types';
+import { QueryFilterOption } from "../types";
 
 export interface QueryOptions {
   allow?: QueryFields;

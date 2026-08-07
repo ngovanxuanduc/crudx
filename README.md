@@ -8,20 +8,20 @@
 <br />
 
 <div align="center">
-  <a href="https://travis-ci.org/gid-oss/dataui-nestjs-crud">
-    <img src="https://github.com/gid-oss/dataui-nestjs-crud/workflows/Tests/badge.svg" alt="Build" />
+  <a href="https://travis-ci.org/ngovanxuanduc/crudx">
+    <img src="https://github.com/ngovanxuanduc/crudx/workflows/Tests/badge.svg" alt="Build" />
   </a>
-  <a href="https://coveralls.io/github/gid-oss/dataui-nestjs-crud?branch=master">
-    <img src="https://coveralls.io/repos/github/gid-oss/dataui-nestjs-crud/badge.svg" alt="Coverage" />
+  <a href="https://coveralls.io/github/ngovanxuanduc/crudx?branch=master">
+    <img src="https://coveralls.io/repos/github/ngovanxuanduc/crudx/badge.svg" alt="Coverage" />
   </a>
-  <a href="https://github.com/gid-oss/dataui-nestjs-crud/blob/master/LICENSE">
-    <img src="https://img.shields.io/github/license/gid-oss/dataui-nestjs-crud.svg" alt="License" />
+  <a href="https://github.com/ngovanxuanduc/crudx/blob/master/LICENSE">
+    <img src="https://img.shields.io/github/license/ngovanxuanduc/crudx.svg" alt="License" />
   </a>
-  <a href="https://www.npmjs.com/package/@dataui/crud">
-    <img src="https://img.shields.io/npm/v/@dataui/crud.svg" alt="npm version" />
+  <a href="https://www.npmjs.com/package/@crudx/crud">
+    <img src="https://img.shields.io/npm/v/@crudx/crud.svg" alt="npm version" />
   </a>
   <a href="https://www.npmjs.com/org/nestjsx">
-    <img src="https://img.shields.io/npm/dm/@dataui/crud.svg" alt="npm downloads" />
+    <img src="https://img.shields.io/npm/dm/@crudx/crud.svg" alt="npm downloads" />
   </a>
   <a href="https://renovatebot.com/">
     <img src="https://img.shields.io/badge/renovate-enabled-brightgreen.svg" alt="Renovate" />
@@ -30,20 +30,20 @@
     <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square" alt="PRs welcome" />
   </a>
   <a href="https://github.com/marmelab/awesome-rest#nodejs">
-    <img src="https://raw.githubusercontent.com/gid-oss/dataui-nestjs-crud/master/img/awesome-rest.svg?sanitize=true" alt="Awesome REST" />
+    <img src="https://raw.githubusercontent.com/ngovanxuanduc/crudx/master/img/awesome-rest.svg?sanitize=true" alt="Awesome REST" />
   </a>
   <a href="https://github.com/juliandavidmr/awesome-nestjs#components--libraries">
-    <img src="https://raw.githubusercontent.com/gid-oss/dataui-nestjs-crud/master/img/awesome-nest.svg?sanitize=true" alt="Awesome Nest" />
+    <img src="https://raw.githubusercontent.com/ngovanxuanduc/crudx/master/img/awesome-nest.svg?sanitize=true" alt="Awesome Nest" />
   </a>
   <a href="https://github.com/nestjs/nest">
-    <img src="https://raw.githubusercontent.com/gid-oss/dataui-nestjs-crud/master/img/nest-powered.svg?sanitize=true" alt="Nest Powered" />
+    <img src="https://raw.githubusercontent.com/ngovanxuanduc/crudx/master/img/nest-powered.svg?sanitize=true" alt="Nest Powered" />
   </a>
 </div>
 
 <div align="center">
   <sub>Built with :purple_heart: by
   <a href="https://twitter.com/MichaelYali">@MichaelYali</a> and
-  <a href="https://github.com/gid-oss/dataui-nestjs-crud/graphs/contributors">
+  <a href="https://github.com/ngovanxuanduc/crudx/graphs/contributors">
     Contributors
   </a>
   <div align="center">
@@ -53,11 +53,11 @@
 
 <br />
 
-We believe that everyone who's working with NestJs and building some RESTful services and especially some CRUD functionality will find `@dataui/crud` microframework very useful.
+We believe that everyone who's working with NestJs and building some RESTful services and especially some CRUD functionality will find `@crudx/crud` microframework very useful.
 
 ## Features
 
-<img align="right" src="https://raw.githubusercontent.com/gid-oss/dataui-nestjs-crud/master/img/crud-usage2.png" alt="CRUD usage" />
+<img align="right" src="https://raw.githubusercontent.com/ngovanxuanduc/crudx/master/img/crud-usage2.png" alt="CRUD usage" />
 
 - :electric_plug: Super easy to install and start using the full-featured controllers and services :point_right:
 
@@ -79,20 +79,20 @@ We believe that everyone who's working with NestJs and building some RESTful ser
 
 ## Install
 
-yarn add @dataui/crud-typeorm
+yarn add @crudx/crud-typeorm
 
 ## Packages
 
-- [**@dataui/crud**](https://www.npmjs.com/package/@dataui/crud) - core package which provides `@Crud()` decorator for endpoints generation, global configuration, validation, helper decorators ([docs](https://gid-oss.github.io/dataui-nestjs-crud/controllers/#description))
-- [**@dataui/crud-request**](https://www.npmjs.com/package/@dataui/crud-request) - request builder/parser package which provides `RequestQueryBuilder` class for a frontend usage and `RequestQueryParser` that is being used internally for handling and validating query/path params on a backend side ([docs](https://gid-oss.github.io/dataui-nestjs-crud/requests/#frontend-usage))
-- [**@dataui/crud-typeorm**](https://www.npmjs.com/package/@dataui/crud-typeorm) - TypeORM package which provides base `TypeOrmCrudService` with methods for CRUD database operations ([docs](https://gid-oss.github.io/dataui-nestjs-crud/service-typeorm/))
+- [**@crudx/crud**](https://www.npmjs.com/package/@crudx/crud) - core package which provides `@Crud()` decorator for endpoints generation, global configuration, validation, helper decorators ([docs](https://gid-oss.github.io/crudx-nestjs-crud/controllers/#description))
+- [**@crudx/crud-request**](https://www.npmjs.com/package/@crudx/crud-request) - request builder/parser package which provides `RequestQueryBuilder` class for a frontend usage and `RequestQueryParser` that is being used internally for handling and validating query/path params on a backend side ([docs](https://gid-oss.github.io/crudx-nestjs-crud/requests/#frontend-usage))
+- [**@crudx/crud-typeorm**](https://www.npmjs.com/package/@crudx/crud-typeorm) - TypeORM package which provides base `TypeOrmCrudService` with methods for CRUD database operations ([docs](https://gid-oss.github.io/crudx-nestjs-crud/service-typeorm/))
 
 ## Documentation
 
-- :dart: [General Information](https://gid-oss.github.io/dataui-nestjs-crud/)
-- :video_game: [CRUD Controllers](https://gid-oss.github.io/dataui-nestjs-crud/controllers/#description)
-- :horse_racing: [CRUD ORM Services](https://gid-oss.github.io/dataui-nestjs-crud/services/)
-- :trumpet: [Handling Requests](https://gid-oss.github.io/dataui-nestjs-crud/requests/#description)
+- :dart: [General Information](https://gid-oss.github.io/crudx-nestjs-crud/)
+- :video_game: [CRUD Controllers](https://gid-oss.github.io/crudx-nestjs-crud/controllers/#description)
+- :horse_racing: [CRUD ORM Services](https://gid-oss.github.io/crudx-nestjs-crud/services/)
+- :trumpet: [Handling Requests](https://gid-oss.github.io/crudx-nestjs-crud/requests/#description)
 
 ## Build library and run tests
 
@@ -110,7 +110,7 @@ yarn test:coverage
 - Pull and checkout master
 - Update Changelog and commit
 - Run tests `docker-compose up -d && yarn rebuild && yarn test:coverage`
-- Run `yarn pub` - this will publish on the npm repo (need to be logged under dataui `yarn login`)
+- Run `yarn pub` - this will publish on the npm repo (need to be logged under crudx `yarn login`)
 
 ## Support
 
@@ -121,7 +121,7 @@ Any support is welcome. At least you can give us a star :star:
 ### Code Contributors
 
 This project exists thanks to all the people who contributed. [[Contribute](CODE_OF_CONDUCT.md)].
-<a href="https://github.com/gid-oss/dataui-nestjs-crud/graphs/contributors"><img src="https://opencollective.com/nestjsx/contributors.svg?width=890&button=false" /></a>
+<a href="https://github.com/ngovanxuanduc/crudx/graphs/contributors"><img src="https://opencollective.com/nestjsx/contributors.svg?width=890&button=false" /></a>
 
 ### Financial Contributors
 

@@ -4,24 +4,24 @@ import {
   Injectable,
   CanActivate,
   ExecutionContext,
-} from '@nestjs/common';
-import { APP_FILTER, APP_GUARD } from '@nestjs/core';
-import { Test } from '@nestjs/testing';
-import { TypeOrmModule } from '@nestjs/typeorm';
+} from "@nestjs/common";
+import { APP_FILTER, APP_GUARD } from "@nestjs/core";
+import { Test } from "@nestjs/testing";
+import { TypeOrmModule } from "@nestjs/typeorm";
 
-import { Crud, CrudAuth } from '@dataui/crud';
-import * as request from 'supertest';
-import { withCache } from '../../../integration/crud-typeorm/orm.config';
-import { User } from '../../../integration/crud-typeorm/users';
-import { UserProfile } from '../../../integration/crud-typeorm/users-profiles';
-import { Project } from '../../../integration/crud-typeorm/projects';
-import { HttpExceptionFilter } from '../../../integration/shared/https-exception.filter';
-import { UsersService } from './__fixture__/users.service';
-import { ProjectsService } from './__fixture__/projects.service';
+import { Crud, CrudAuth } from "@crudx/crud";
+import * as request from "supertest";
+import { withCache } from "../../../integration/crud-typeorm/orm.config";
+import { User } from "../../../integration/crud-typeorm/users";
+import { UserProfile } from "../../../integration/crud-typeorm/users-profiles";
+import { Project } from "../../../integration/crud-typeorm/projects";
+import { HttpExceptionFilter } from "../../../integration/shared/https-exception.filter";
+import { UsersService } from "./__fixture__/users.service";
+import { ProjectsService } from "./__fixture__/projects.service";
 
-describe('#crud-typeorm', () => {
-  describe('#CrudAuth', () => {
-    const USER_REQUEST_KEY = 'user';
+describe("#crud-typeorm", () => {
+  describe("#CrudAuth", () => {
+    const USER_REQUEST_KEY = "user";
     let app: INestApplication;
     let server: request.SuperTest<request.Test>;
 
@@ -44,7 +44,7 @@ describe('#crud-typeorm', () => {
         type: User,
       },
       routes: {
-        only: ['getOneBase', 'updateOneBase'],
+        only: ["getOneBase", "updateOneBase"],
       },
       params: {
         id: {
@@ -62,7 +62,7 @@ describe('#crud-typeorm', () => {
         email: user.email,
       }),
     })
-    @Controller('me')
+    @Controller("me")
     class MeController {
       constructor(public service: UsersService) {}
     }
@@ -72,7 +72,7 @@ describe('#crud-typeorm', () => {
         type: Project,
       },
       routes: {
-        only: ['createOneBase', 'deleteOneBase'],
+        only: ["createOneBase", "deleteOneBase"],
       },
     })
     @CrudAuth({
@@ -84,7 +84,7 @@ describe('#crud-typeorm', () => {
         companyId: user.companyId,
       }),
     })
-    @Controller('projects')
+    @Controller("projects")
     class ProjectsController {
       constructor(public service: ProjectsService) {}
     }
@@ -120,47 +120,47 @@ describe('#crud-typeorm', () => {
       await app.close();
     });
 
-    describe('#getOneBase', () => {
-      it('should return a user with id 1', async () => {
-        const res = await server.get('/me'); //.expect(200);
+    describe("#getOneBase", () => {
+      it("should return a user with id 1", async () => {
+        const res = await server.get("/me"); //.expect(200);
         expect(res.body.id).toBe(1);
       });
     });
 
-    describe('#updateOneBase', () => {
-      it('should update user with auth persist, 1', async () => {
+    describe("#updateOneBase", () => {
+      it("should update user with auth persist, 1", async () => {
         const res = await server
-          .patch('/me')
+          .patch("/me")
           .send({
-            email: 'some@dot.com',
+            email: "some@dot.com",
             isActive: false,
           })
           .expect(200);
         expect(res.body.id).toBe(1);
-        expect(res.body.email).toBe('1@email.com');
+        expect(res.body.email).toBe("1@email.com");
         expect(res.body.isActive).toBe(false);
       });
-      it('should update user with auth persist, 1', async () => {
+      it("should update user with auth persist, 1", async () => {
         const res = await server
-          .patch('/me')
+          .patch("/me")
           .send({
-            email: 'some@dot.com',
+            email: "some@dot.com",
             isActive: true,
           })
           .expect(200);
         expect(res.body.id).toBe(1);
-        expect(res.body.email).toBe('1@email.com');
+        expect(res.body.email).toBe("1@email.com");
         expect(res.body.isActive).toBe(true);
       });
     });
 
-    describe('#createOneBase', () => {
-      it('should create an entity with auth persist', async () => {
+    describe("#createOneBase", () => {
+      it("should create an entity with auth persist", async () => {
         const res = await server
-          .post('/projects')
+          .post("/projects")
           .send({
-            name: 'Test',
-            description: 'foo',
+            name: "Test",
+            description: "foo",
             isActive: false,
             companyId: 10,
           })
@@ -169,12 +169,12 @@ describe('#crud-typeorm', () => {
       });
     });
 
-    describe('#deleteOneBase', () => {
-      it('should delete an entity with auth filter', async () => {
-        const res = await server.delete('/projects/21').expect(200);
+    describe("#deleteOneBase", () => {
+      it("should delete an entity with auth filter", async () => {
+        const res = await server.delete("/projects/21").expect(200);
       });
-      it('should throw an error with auth filter', async () => {
-        const res = await server.delete('/projects/20').expect(404);
+      it("should throw an error with auth filter", async () => {
+        const res = await server.delete("/projects/20").expect(404);
       });
     });
   });
