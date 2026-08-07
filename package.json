@@ -1,6 +1,6 @@
 {
   "name": "@crudx/crud",
-  "version": "6.0.0",
+  "version": "6.0.0-alpha.1",
   "description": "Nest CRUD for RESTful APIs",
   "license": "MIT",
   "workspaces": [

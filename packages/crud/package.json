@@ -1,7 +1,7 @@
 {
   "name": "@crudx/crud",
   "description": "NestJs CRUD for RESTful APIs",
-  "version": "5.3.4",
+  "version": "6.0.0-alpha.1",
   "license": "MIT",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
@@ -40,8 +40,8 @@
     "build": "npx tsc -b"
   },
   "dependencies": {
-    "@crudx/crud-request": "^5.3.4",
-    "@crudx/crud-util": "^5.3.4",
+    "@crudx/crud-request": "^6.0.0-alpha.1",
+    "@crudx/crud-util": "^6.0.0-alpha.1",
     "deepmerge": "^3.2.0",
     "pluralize": "^8.0.0"
   },
