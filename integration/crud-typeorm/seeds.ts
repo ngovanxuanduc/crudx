@@ -20,16 +20,16 @@ export class Seeds1544303473346 implements MigrationInterface {
   }
 
   public async up(queryRunner: QueryRunner): Promise<any> {
-    const { connection } = queryRunner;
+    const { dataSource } = queryRunner;
 
-    const companiesRepo = connection.getRepository(Company);
-    const projectsRepo = connection.getRepository(Project);
-    const usersProfilesRepo = connection.getRepository(UserProfile);
-    const usersRepo = connection.getRepository(User);
-    const licensesRepo = connection.getRepository(License);
-    const usersLincesesRepo = connection.getRepository(UserLicense);
-    const usersProjectsRepo = connection.getRepository(UserProject);
-    const notesRepo = connection.getRepository(Note);
+    const companiesRepo = dataSource.getRepository(Company);
+    const projectsRepo = dataSource.getRepository(Project);
+    const usersProfilesRepo = dataSource.getRepository(UserProfile);
+    const usersRepo = dataSource.getRepository(User);
+    const licensesRepo = dataSource.getRepository(License);
+    const usersLincesesRepo = dataSource.getRepository(UserLicense);
+    const usersProjectsRepo = dataSource.getRepository(UserProject);
+    const notesRepo = dataSource.getRepository(Note);
 
     // companies
     await this.save(companiesRepo, [

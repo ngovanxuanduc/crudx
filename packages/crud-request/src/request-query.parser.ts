@@ -101,6 +101,7 @@ export class RequestQueryParser implements ParsedRequestParams {
 
   parseQuery(query: any, customOperators: CustomOperators = {}): this {
     if (isObject(query)) {
+      query = this.normalizeQuery(query);
       const paramNames = objKeys(query);
 
       if (hasLength(paramNames)) {
@@ -200,6 +201,43 @@ export class RequestQueryParser implements ParsedRequestParams {
         ? name === p
         : (name as string[]).some((m) => m === p);
     });
+  }
+
+  /**
+   * Normalizes query params produced by Express 5's default "simple" query
+   * parser, which turns `filter[0]=x&filter[1]=y` into literal keys
+   * `{ "filter[0]": "x", "filter[1]": "y" }` instead of a qs-style array.
+   * Regroups them into `{ filter: ["x", "y"] }` so the rest of the parser
+   * works regardless of the underlying Express query parser.
+   */
+  private normalizeQuery(query: any): any {
+    if (!isObject(query)) {
+      return query;
+    }
+
+    const result: any = {};
+    const grouped: { [key: string]: any[] } = {};
+
+    for (const key of objKeys(query)) {
+      const match = key.match(/^(.+)\[(\d*)\]$/);
+      if (match) {
+        const [, name, index] = match;
+        grouped[name] = grouped[name] || [];
+        if (index === "") {
+          grouped[name].push(query[key]);
+        } else {
+          grouped[name][parseInt(index, 10)] = query[key];
+        }
+      } else {
+        result[key] = query[key];
+      }
+    }
+
+    for (const name of Object.keys(grouped)) {
+      result[name] = grouped[name];
+    }
+
+    return result;
   }
 
   private getParamValues(value: string | string[], parser: Function): string[] {

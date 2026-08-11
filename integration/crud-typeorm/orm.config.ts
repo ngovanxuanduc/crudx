@@ -18,8 +18,10 @@ export const withCache: DataSourceOptions = {
   cache: {
     type: "redis",
     options: {
-      host: "127.0.0.1",
-      port: 6399,
+      socket: {
+        host: "127.0.0.1",
+        port: 6399,
+      },
     },
   },
   entities: [join(__dirname, "./**/*.entity{.ts,.js}")],

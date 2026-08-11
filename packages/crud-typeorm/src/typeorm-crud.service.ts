@@ -33,7 +33,7 @@ import { plainToClass } from "class-transformer";
 import {
   Brackets,
   ColumnType,
-  ConnectionOptions,
+  DataSourceOptions,
   DeepPartial,
   EntityMetadata,
   ObjectLiteral,
@@ -53,7 +53,7 @@ interface IAllowedRelation {
 }
 
 export class TypeOrmCrudService<T> extends CrudService<T, DeepPartial<T>> {
-  protected dbName: ConnectionOptions["type"];
+  protected dbName: DataSourceOptions["type"];
   protected entityColumns: string[];
   protected entityPrimaryColumns: string[];
   protected entityHasDeleteColumn: boolean = false;
@@ -956,8 +956,6 @@ export class TypeOrmCrudService<T> extends CrudService<T, DeepPartial<T>> {
         builder.expressionMap.aliasNamePrefixingEnabled;
       whereQueryBuilder.expressionMap.parameters =
         builder.expressionMap.parameters;
-      whereQueryBuilder.expressionMap.nativeParameters =
-        builder.expressionMap.nativeParameters;
 
       whereQueryBuilder.expressionMap.wheres = [];
 

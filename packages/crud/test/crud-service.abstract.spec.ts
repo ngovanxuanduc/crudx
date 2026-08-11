@@ -12,7 +12,7 @@ describe('#crud', () => {
 
     describe('#throwBadRequestException', () => {
       it('should throw BadRequestException', () => {
-        expect(service.throwBadRequestException.bind(service, '')).toThrowError(
+        expect(service.throwBadRequestException.bind(service, '')).toThrow(
           BadRequestException,
         );
       });
@@ -20,7 +20,7 @@ describe('#crud', () => {
 
     describe('#throwNotFoundException', () => {
       it('should throw NotFoundException', () => {
-        expect(service.throwNotFoundException.bind(service, '')).toThrowError(
+        expect(service.throwNotFoundException.bind(service, '')).toThrow(
           NotFoundException,
         );
       });

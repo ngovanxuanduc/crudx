@@ -11,8 +11,24 @@ const pluralize = require("pluralize");
 export const swagger = safeRequire("@nestjs/swagger", () =>
   require("@nestjs/swagger"),
 );
-export const swaggerConst = safeRequire("@nestjs/swagger/dist/constants", () =>
-  require("@nestjs/swagger/dist/constants"),
+const SWAGGER_DECORATORS = {
+  API_OPERATION: "swagger/apiOperation",
+  API_RESPONSE: "swagger/apiResponse",
+  API_PARAMETERS: "swagger/apiParameters",
+  API_EXTRA_MODELS: "swagger/apiExtraModels",
+};
+export const swaggerConst = safeRequire(
+  "@nestjs/swagger/dist/constants",
+  () => {
+    try {
+      return require("@nestjs/swagger/dist/constants");
+    } catch (_) {
+      // @nestjs/swagger >= 9 (Nest >= 9) restricts subpath imports via the
+      // "exports" field in package.json, so fall back to the stable
+      // DECORATORS keys.
+      return { DECORATORS: SWAGGER_DECORATORS };
+    }
+  },
 );
 export const swaggerPkgJson = safeRequire("@nestjs/swagger/package.json", () =>
   require("@nestjs/swagger/package.json"),
@@ -627,8 +643,9 @@ export class Swagger {
   }
 
   private static getSwaggerVersion(): number {
+    // parse the major version, e.g. "11.4.6" -> 11 (not the first character)
     return swaggerPkgJson
-      ? parseInt(swaggerPkgJson.version[0], 10)
+      ? parseInt(String(swaggerPkgJson.version).split(".")[0], 10)
       : /* istanbul ignore next */ 3;
   }
 }

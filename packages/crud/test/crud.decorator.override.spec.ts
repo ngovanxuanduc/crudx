@@ -84,7 +84,7 @@ describe("#crud", () => {
 
     describe("#override getMany", () => {
       it("should return status 200", (done) => {
-        return request(server)
+        request(server)
           .get("/test")
           .expect(200)
           .end((_, res) => {
@@ -95,7 +95,7 @@ describe("#crud", () => {
       });
       it("should return status 400", (done) => {
         const query = qb.setFilter({ field: "foo", operator: "gt" }).query();
-        return request(server)
+        request(server)
           .get("/test")
           .query(query)
           .end((_, res) => {
@@ -164,7 +164,7 @@ describe("#crud", () => {
         const send: CreateManyDto<TestModel> = {
           bulk: [],
         };
-        return request(server)
+        request(server)
           .post("/test/bulk")
           .send(send)
           .end((_, res) => {
@@ -189,7 +189,7 @@ describe("#crud", () => {
             },
           ],
         };
-        return request(server)
+        request(server)
           .post("/test/bulk")
           .send(send)
           .expect(201)

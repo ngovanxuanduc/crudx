@@ -63,7 +63,7 @@ describe('#crud', () => {
           lastName: 'lastName',
           email: 'test@test.com',
         };
-        return request(server)
+        request(server)
           .post('/test')
           .send(send)
           .end((_, res) => {
@@ -93,7 +93,7 @@ describe('#crud', () => {
           lastName: 'lastName',
           email: 'foo',
         };
-        return request(server)
+        request(server)
           .patch('/test/1')
           .send(send)
           .end((_, res) => {

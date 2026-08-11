@@ -95,7 +95,7 @@ describe('#crud', () => {
     });
 
     it('should return options in ParsedRequest', (done) => {
-      return request(server)
+      request(server)
         .get('/test')
         .expect(200)
         .end((_, res) => {

@@ -44,7 +44,7 @@ describe('#request-query', () => {
         expect(qb.queryObject.fields).toBeUndefined();
       });
       it('should throw an error', () => {
-        expect((qb.select as any).bind(qb, [false])).toThrowError(RequestQueryException);
+        expect((qb.select as any).bind(qb, [false])).toThrow(RequestQueryException);
       });
       it('should set fields', () => {
         qb.select(['foo', 'bar']);
@@ -59,17 +59,17 @@ describe('#request-query', () => {
         expect(qb.queryObject.filter).toBeUndefined();
       });
       it('should throw an error, 1', () => {
-        expect((qb.setFilter as any).bind(qb, { field: 1 })).toThrowError(
+        expect((qb.setFilter as any).bind(qb, { field: 1 })).toThrow(
           RequestQueryException,
         );
       });
       it('should throw an error, 2', () => {
         expect(
           (qb.setFilter as any).bind(qb, { field: 'foo', operator: 'bar' }),
-        ).toThrowError(RequestQueryException);
+        ).toThrow(RequestQueryException);
       });
       it('should throw an error, 3', () => {
-        expect((qb.setFilter as any).bind(qb, [{}])).toThrowError(RequestQueryException);
+        expect((qb.setFilter as any).bind(qb, [{}])).toThrow(RequestQueryException);
       });
       it('should set filter, 1', () => {
         qb.setFilter({ field: 'foo', operator: 'eq', value: 'bar' });
@@ -113,17 +113,17 @@ describe('#request-query', () => {
         expect(qb.queryObject.or).toBeUndefined();
       });
       it('should throw an error, 1', () => {
-        expect((qb.setOr as any).bind(qb, { field: 1 })).toThrowError(
+        expect((qb.setOr as any).bind(qb, { field: 1 })).toThrow(
           RequestQueryException,
         );
       });
       it('should throw an error, 2', () => {
         expect(
           (qb.setOr as any).bind(qb, { field: 'foo', operator: 'bar' }),
-        ).toThrowError(RequestQueryException);
+        ).toThrow(RequestQueryException);
       });
       it('should throw an error, 3', () => {
-        expect((qb.setOr as any).bind(qb, [{}])).toThrowError(RequestQueryException);
+        expect((qb.setOr as any).bind(qb, [{}])).toThrow(RequestQueryException);
       });
       it('should set or, 1', () => {
         qb.setOr({ field: 'foo', operator: 'eq', value: 'bar' });
@@ -146,17 +146,17 @@ describe('#request-query', () => {
         expect(qb.queryObject.join).toBeUndefined();
       });
       it('should throw an error, 1', () => {
-        expect((qb.setJoin as any).bind(qb, { field: 1 })).toThrowError(
+        expect((qb.setJoin as any).bind(qb, { field: 1 })).toThrow(
           RequestQueryException,
         );
       });
       it('should throw an error, 2', () => {
-        expect((qb.setJoin as any).bind(qb, { field: 'foo', select: 1 })).toThrowError(
+        expect((qb.setJoin as any).bind(qb, { field: 'foo', select: 1 })).toThrow(
           RequestQueryException,
         );
       });
       it('should throw an error, 3', () => {
-        expect((qb.setJoin as any).bind(qb, [{}])).toThrowError(RequestQueryException);
+        expect((qb.setJoin as any).bind(qb, [{}])).toThrow(RequestQueryException);
       });
       it('should throw an error, 4', () => {
         expect(
@@ -165,7 +165,7 @@ describe('#request-query', () => {
             select: ['a', 'b', 'c'],
             on: [{}],
           }),
-        ).toThrowError(RequestQueryException);
+        ).toThrow(RequestQueryException);
       });
       it('should set join, 1', () => {
         qb.setJoin({ field: 'foo' });
@@ -234,17 +234,17 @@ describe('#request-query', () => {
         expect(qb.queryObject.sort).toBeUndefined();
       });
       it('should throw an error, 1', () => {
-        expect((qb.sortBy as any).bind(qb, { field: 1 })).toThrowError(
+        expect((qb.sortBy as any).bind(qb, { field: 1 })).toThrow(
           RequestQueryException,
         );
       });
       it('should throw an error, 2', () => {
-        expect((qb.sortBy as any).bind(qb, { field: 'foo', order: 'bar' })).toThrowError(
+        expect((qb.sortBy as any).bind(qb, { field: 'foo', order: 'bar' })).toThrow(
           RequestQueryException,
         );
       });
       it('should throw an error, 3', () => {
-        expect((qb.sortBy as any).bind(qb, [{}])).toThrowError(RequestQueryException);
+        expect((qb.sortBy as any).bind(qb, [{}])).toThrow(RequestQueryException);
       });
       it('should set sort, 1', () => {
         qb.sortBy({ field: 'foo', order: 'ASC' });
@@ -282,7 +282,7 @@ describe('#request-query', () => {
         expect(qb.queryObject.limit).toBeUndefined();
       });
       it('should throw an error', () => {
-        expect((qb.setLimit as any).bind(qb, {})).toThrowError(RequestQueryException);
+        expect((qb.setLimit as any).bind(qb, {})).toThrow(RequestQueryException);
       });
       it('should set limit', () => {
         const expected = 10;
@@ -297,7 +297,7 @@ describe('#request-query', () => {
         expect(qb.queryObject.offset).toBeUndefined();
       });
       it('should throw an error', () => {
-        expect((qb.setOffset as any).bind(qb, {})).toThrowError(RequestQueryException);
+        expect((qb.setOffset as any).bind(qb, {})).toThrow(RequestQueryException);
       });
       it('should set offset', () => {
         const expected = 10;
@@ -312,7 +312,7 @@ describe('#request-query', () => {
         expect(qb.queryObject.page).toBeUndefined();
       });
       it('should throw an error', () => {
-        expect((qb.setPage as any).bind(qb, {})).toThrowError(RequestQueryException);
+        expect((qb.setPage as any).bind(qb, {})).toThrow(RequestQueryException);
       });
       it('should set page', () => {
         const expected = 10;
@@ -331,10 +331,10 @@ describe('#request-query', () => {
 
     describe('#cond', () => {
       it('should throw an error, 1', () => {
-        expect(qb.cond as any).toThrowError(RequestQueryException);
+        expect(qb.cond as any).toThrow(RequestQueryException);
       });
       it('should throw an error, 2', () => {
-        expect((qb.cond as any).bind(qb, {})).toThrowError(RequestQueryException);
+        expect((qb.cond as any).bind(qb, {})).toThrow(RequestQueryException);
       });
       it('should return a filter string from an object', () => {
         const test = qb.cond({ field: 'foo', operator: 'eq', value: 'bar' });

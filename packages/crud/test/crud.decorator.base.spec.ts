@@ -53,7 +53,7 @@ describe("#crud", () => {
       });
       it("should return status 400", (done) => {
         const query = qb.setFilter({ field: "foo", operator: "gt" }).query();
-        return request(server)
+        request(server)
           .get("/test")
           .query(query)
           .end((_, res) => {
@@ -73,7 +73,7 @@ describe("#crud", () => {
         return request(server).get("/test/1").expect(200);
       });
       it("should return status 400", (done) => {
-        return request(server)
+        request(server)
           .get("/test/invalid")
           .end((_, res) => {
             const expected = {
@@ -103,7 +103,7 @@ describe("#crud", () => {
           lastName: "lastName",
           email: "test@test.com",
         };
-        return request(server)
+        request(server)
           .post("/test")
           .send(send)
           .end((_, res) => {
@@ -137,7 +137,7 @@ describe("#crud", () => {
         const send: CreateManyDto<TestModel> = {
           bulk: [],
         };
-        return request(server)
+        request(server)
           .post("/test/bulk")
           .send(send)
           .end((_, res) => {
@@ -164,7 +164,7 @@ describe("#crud", () => {
           lastName: "lastName",
           email: "test@test.com",
         };
-        return request(server)
+        request(server)
           .put("/test/1")
           .send(send)
           .end((_, res) => {
@@ -191,7 +191,7 @@ describe("#crud", () => {
           lastName: "lastName",
           email: "test@test.com",
         };
-        return request(server)
+        request(server)
           .patch("/test/1")
           .send(send)
           .end((_, res) => {

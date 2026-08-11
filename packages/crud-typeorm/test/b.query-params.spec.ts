@@ -240,7 +240,7 @@ describe("#crud-typeorm", () => {
         const query = qb
           .setFilter({ field: "invalid", operator: "isnull" })
           .query();
-        return request(server)
+        request(server)
           .get("/companies")
           .query(query)
           .end((_, res) => {
@@ -253,7 +253,7 @@ describe("#crud-typeorm", () => {
     describe("#query filter", () => {
       it("should return data with limit", (done) => {
         const query = qb.setLimit(4).query();
-        return request(server)
+        request(server)
           .get("/companies")
           .query(query)
           .end((_, res) => {
@@ -267,7 +267,7 @@ describe("#crud-typeorm", () => {
       });
       it("should return with maxLimit", (done) => {
         const query = qb.setLimit(7).query();
-        return request(server)
+        request(server)
           .get("/companies")
           .query(query)
           .end((_, res) => {
@@ -285,7 +285,7 @@ describe("#crud-typeorm", () => {
           })
           .setOr({ field: "domain", operator: "cont", value: 5 })
           .query();
-        return request(server)
+        request(server)
           .get("/companies")
           .query(query)
           .end((_, res) => {
@@ -300,7 +300,7 @@ describe("#crud-typeorm", () => {
           .setOr({ field: "name", operator: "starts", value: "P" })
           .setOr({ field: "isActive", operator: "eq", value: true })
           .query();
-        return request(server)
+        request(server)
           .get("/projects")
           .query(query)
           .end((_, res) => {
@@ -315,7 +315,7 @@ describe("#crud-typeorm", () => {
           .setFilter({ field: "companyId", operator: "gte", value: 6 })
           .setFilter({ field: "companyId", operator: "lt", value: 10 })
           .query();
-        return request(server)
+        request(server)
           .get("/projects")
           .query(query)
           .end((_, res) => {
@@ -331,7 +331,7 @@ describe("#crud-typeorm", () => {
           .setFilter({ field: "isActive", operator: "eq", value: false })
           .setFilter({ field: "description", operator: "notnull" })
           .query();
-        return request(server)
+        request(server)
           .get("/projects")
           .query(query)
           .end((_, res) => {
@@ -344,7 +344,7 @@ describe("#crud-typeorm", () => {
         const query = qb
           .setOr({ field: "companyId", operator: "isnull" })
           .query();
-        return request(server)
+        request(server)
           .get("/projects")
           .query(query)
           .end((_, res) => {
@@ -357,7 +357,7 @@ describe("#crud-typeorm", () => {
         const query = qb
           .setOr({ field: "companyId", operator: "between", value: [1, 5] })
           .query();
-        return request(server)
+        request(server)
           .get("/projects")
           .query(query)
           .end((_, res) => {
@@ -370,7 +370,7 @@ describe("#crud-typeorm", () => {
         const query = qb
           .setOr({ field: "companyId", operator: "eq", value: 1 })
           .query();
-        return request(server)
+        request(server)
           .get("/projects")
           .query(query)
           .end((_, res) => {
@@ -386,7 +386,7 @@ describe("#crud-typeorm", () => {
         const query = qb
           .setJoin({ field: "company", select: ["name"] })
           .query();
-        return request(server)
+        request(server)
           .get("/projects/2")
           .query(query)
           .end((_, res) => {
@@ -397,7 +397,7 @@ describe("#crud-typeorm", () => {
       });
       it("should return joined entity, 2", (done) => {
         const query = qb.setJoin({ field: "users", select: ["name"] }).query();
-        return request(server)
+        request(server)
           .get("/companies/2")
           .query(query)
           .end((_, res) => {
@@ -415,7 +415,7 @@ describe("#crud-typeorm", () => {
             on: [{ field: "user.id", operator: "$eq", value: 1 }],
           })
           .query();
-        return request(server)
+        request(server)
           .get("/profiles")
           .query(query)
           .end((_, res) => {
@@ -427,7 +427,7 @@ describe("#crud-typeorm", () => {
       });
       it("should eager join without selection", (done) => {
         const query = qb.search({ "userCompany.id": { $eq: 1 } }).query();
-        return request(server)
+        request(server)
           .get("/myusers")
           .query(query)
           .end((_, res) => {
@@ -450,7 +450,7 @@ describe("#crud-typeorm", () => {
             value: "invalid",
           })
           .query();
-        return request(server)
+        request(server)
           .get("/users/1")
           .query(query)
           .end((_, res) => {
@@ -468,7 +468,7 @@ describe("#crud-typeorm", () => {
             value: "invalid",
           })
           .query();
-        return request(server)
+        request(server)
           .get("/users/1")
           .query(query)
           .end((_, res) => {
@@ -486,7 +486,7 @@ describe("#crud-typeorm", () => {
             value: "invalid",
           })
           .query();
-        return request(server)
+        request(server)
           .get("/users/1")
           .query(query)
           .end((_, res) => {
@@ -499,7 +499,7 @@ describe("#crud-typeorm", () => {
           .setJoin({ field: "company" })
           .setJoin({ field: "company.projectsinvalid" })
           .query();
-        return request(server)
+        request(server)
           .get("/users/1")
           .query(query)
           .end((_, res) => {
@@ -517,7 +517,7 @@ describe("#crud-typeorm", () => {
           .setJoin({ field: "company" })
           .setJoin({ field: "company.projects" })
           .query();
-        return request(server)
+        request(server)
           .get("/users/1")
           .query(query)
           .end((_, res) => {
@@ -533,7 +533,7 @@ describe("#crud-typeorm", () => {
           .setJoin({ field: "company" })
           .setJoin({ field: "company.projects" })
           .query();
-        return request(server)
+        request(server)
           .get("/users/1")
           .query(query)
           .end((_, res) => {
@@ -549,7 +549,7 @@ describe("#crud-typeorm", () => {
           .setJoin({ field: "company" })
           .setJoin({ field: "company.projects" })
           .query();
-        return request(server)
+        request(server)
           .get("/users2/1")
           .query(query)
           .end((_, res) => {
@@ -564,7 +564,7 @@ describe("#crud-typeorm", () => {
           .setJoin({ field: "users" })
           .setJoin({ field: "userProjects" })
           .query();
-        return request(server)
+        request(server)
           .get("/projects/1")
           .query(query)
           .end((_, res) => {
@@ -583,7 +583,7 @@ describe("#crud-typeorm", () => {
     describe("#query composite key join", () => {
       it("should return joined relation", (done) => {
         const query = qb.setJoin({ field: "userLicenses" }).query();
-        return request(server)
+        request(server)
           .get("/users/1")
           .query(query)
           .end((_, res) => {
@@ -663,7 +663,7 @@ describe("#crud-typeorm", () => {
           })
           .query();
 
-        return request(server)
+        request(server)
           .get("/companies")
           .query(query)
           .end((_, res) => {

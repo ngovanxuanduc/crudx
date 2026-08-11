@@ -38,7 +38,7 @@ describe("#request-query", () => {
       it("should not pass with undefined custom validator", () => {
         expect(
           validateComparisonOperator.bind(this, "undefinedCustom"),
-        ).toThrowError(RequestQueryException);
+        ).toThrow(RequestQueryException);
       });
     });
   });

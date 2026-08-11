@@ -13,16 +13,16 @@
     "allowJs": false,
     "skipLibCheck": false,
     "composite": true,
-    "baseUrl": "./packages",
+    "strictNullChecks": false,
     "paths": {
-      "@crudx/crud": ["crud/src"],
-      "@crudx/crud-typeorm": ["crud-typeorm/src"],
-      "@crudx/crud-request": ["crud-request/src"],
-      "@crudx/crud-util": ["crud-util/src"],
-      "@crudx/crud/*": ["crud/src/*"],
-      "@crudx/crud-typeorm/*": ["crud-typeorm/src/*"],
-      "@crudx/crud-request/*": ["crud-request/src/*"],
-      "@crudx/crud-util/*": ["crud-util/src/*"]
+      "@crudx/crud": ["./packages/crud/src"],
+      "@crudx/crud-typeorm": ["./packages/crud-typeorm/src"],
+      "@crudx/crud-request": ["./packages/crud-request/src"],
+      "@crudx/crud-util": ["./packages/crud-util/src"],
+      "@crudx/crud/*": ["./packages/crud/src/*"],
+      "@crudx/crud-typeorm/*": ["./packages/crud-typeorm/src/*"],
+      "@crudx/crud-request/*": ["./packages/crud-request/src/*"],
+      "@crudx/crud-util/*": ["./packages/crud-util/src/*"]
     }
   },
   "references": [
