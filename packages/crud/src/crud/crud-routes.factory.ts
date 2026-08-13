@@ -11,7 +11,7 @@ import {
   isObjectFull,
   isUndefined,
   objKeys,
-} from "@crudx/crud-util";
+} from "@crudx2/crud-util";
 import * as deepmerge from "deepmerge";
 
 import { CrudActions, CrudValidationGroups } from "../enums";

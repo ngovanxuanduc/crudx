@@ -10,7 +10,7 @@ import {
   isStringFull,
   ObjectLiteral,
   objKeys,
-} from "@crudx/crud-util";
+} from "@crudx2/crud-util";
 import { ClassTransformOptions } from "class-transformer";
 
 import { RequestQueryException } from "./exceptions";

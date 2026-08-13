@@ -14,7 +14,7 @@ import {
   IsDefined,
   IsBoolean,
 } from "class-validator";
-import { CrudValidationGroups } from "@crudx/crud";
+import { CrudValidationGroups } from "@crudx2/crud";
 
 import { BaseEntity } from "../base-entity";
 import { Company } from "../companies/company.entity";

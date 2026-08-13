@@ -1,4 +1,4 @@
-import { ClassType } from "@crudx/crud-util";
+import { ClassType } from "@crudx2/crud-util";
 import { plainToClass } from "class-transformer";
 import { MigrationInterface, Repository, QueryRunner } from "typeorm";
 import { Company } from "./companies";

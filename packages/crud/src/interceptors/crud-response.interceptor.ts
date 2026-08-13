@@ -4,7 +4,7 @@ import {
   Injectable,
   NestInterceptor,
 } from "@nestjs/common";
-import { isFalse, isObject, isFunction } from "@crudx/crud-util";
+import { isFalse, isObject, isFunction } from "@crudx2/crud-util";
 import {
   classToPlain,
   classToPlainFromExist,

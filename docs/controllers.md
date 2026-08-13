@@ -7,7 +7,7 @@ nav_order: 20
 
 ## Description
 
-[**@crudx/crud**](https://www.npmjs.com/package/@crudx/crud) - core package which provides `@Crud()` controller decorator for endpoints generation, global configuration, validation, helper decorators.
+[**@crudx2/crud**](https://www.npmjs.com/package/@crudx2/crud) - core package which provides `@Crud()` controller decorator for endpoints generation, global configuration, validation, helper decorators.
 
 ## Table of Contents
 
@@ -35,18 +35,18 @@ nav_order: 20
 ## Install
 
 ```shell
-npm i @crudx/crud class-transformer class-validator
+npm i @crudx2/crud class-transformer class-validator
 ```
 
 ### Using TypeORM
 
 ```shell
-npm i @crudx/crud-typeorm @nestjs/typeorm typeorm
+npm i @crudx2/crud-typeorm @nestjs/typeorm typeorm
 ```
 
 ## Getting started
 
-Let's take a look at the example of using `@crudx/crud` with TypeORM.
+Let's take a look at the example of using `@crudx2/crud` with TypeORM.
 
 Assume we have some TypeORM **entity**:
 
@@ -66,7 +66,7 @@ Then we need to create a **service**:
 ```typescript
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { TypeOrmCrudService } from "@crudx/crud-typeorm";
+import { TypeOrmCrudService } from "@crudx2/crud-typeorm";
 
 import { Company } from "./company.entity";
 
@@ -82,7 +82,7 @@ We've done with the service so let's create a **controller**:
 
 ```typescript
 import { Controller } from "@nestjs/common";
-import { Crud, CrudController } from "@crudx/crud";
+import { Crud, CrudController } from "@crudx2/crud";
 
 import { Company } from "./company.entity";
 import { CompaniesService } from "./companies.service";
@@ -497,7 +497,7 @@ This option can be used in two scenarios:
 - Transform query search conditions:
 
 ```typescript
-import { SCondition } from '@crudx/crud-request'
+import { SCondition } from '@crudx2/crud-request'
 
 ...
 
@@ -730,7 +730,7 @@ In order to reduce some repetition in your `CrudOptions` in every controller you
 So in order to apply global options you need load them in your **main.ts (index.ts) file BEFORE you import `AppModule` class**. That's because TypeScript decorators are executed when we declare our class but not when we create new class instance. So in your `main.ts`:
 
 ```typescript
-import { CrudConfigService } from '@crudx/crud';
+import { CrudConfigService } from '@crudx2/crud';
 
 CrudConfigService.load({
   query: {
@@ -813,7 +813,7 @@ Let's take a look at this example:
 import { Entity, Column, OneToMany } from "typeorm";
 import { IsOptional, IsString, MaxLength, IsNotEmpty } from "class-validator";
 import { Type } from "class-transformer";
-import { CrudValidationGroups } from "@crudx/crud";
+import { CrudValidationGroups } from "@crudx2/crud";
 
 import { BaseEntity } from "../base-entity";
 import { User } from "../users/user.entity";
@@ -886,7 +886,7 @@ Second, even after adding `CrudController` interface you still wouldn't see comp
 
 ```typescript
 ...
-import { Crud, CrudController } from '@crudx/crud';
+import { Crud, CrudController } from '@crudx2/crud';
 
 @Crud(Hero)
 @Controller('heroes')
@@ -957,7 +957,7 @@ import {
   ParsedRequest,
   ParsedBody,
   CreateManyDto,
-} from '@crudx/crud';
+} from '@crudx2/crud';
 
 @Crud({
   model: {
@@ -1040,7 +1040,7 @@ import {
   ParsedRequest,
   CrudRequest,
   CrudRequestInterceptor,
-} from '@crudx/crud';
+} from '@crudx2/crud';
 ...
 
 @UseInterceptors(CrudRequestInterceptor)
@@ -1070,7 +1070,7 @@ enum CrudActions {
 
 ```typescript
 import { Injectable, CanActivate, ExecutionContext } from "@nestjs/common";
-import { getFeature, getAction } from "@crudx/crud";
+import { getFeature, getAction } from "@crudx2/crud";
 
 @Injectable()
 export class ACLGuard implements CanActivate {

@@ -1,4 +1,4 @@
-import { RequestQueryBuilder } from "@crudx/crud-request";
+import { RequestQueryBuilder } from "@crudx2/crud-request";
 import { CrudGlobalConfig } from "../src/interfaces";
 import { CrudConfigService } from "../src/module/crud-config.service";
 

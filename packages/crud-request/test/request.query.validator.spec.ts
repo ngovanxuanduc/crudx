@@ -1,4 +1,4 @@
-import { RequestQueryException } from "@crudx/crud-request";
+import { RequestQueryException } from "@crudx2/crud-request";
 import {
   validateComparisonOperator,
   validateUUID,

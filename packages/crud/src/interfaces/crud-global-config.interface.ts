@@ -1,4 +1,4 @@
-import { RequestQueryBuilderOptions } from "@crudx/crud-request";
+import { RequestQueryBuilderOptions } from "@crudx2/crud-request";
 
 import { AuthGlobalOptions } from "./auth-options.interface";
 import { OperatorsOptions } from "./operators-options.interface";

@@ -1,7 +1,7 @@
 import {
   QueryFields,
   QuerySort,
-} from "@crudx/crud-request/lib/types/request-query.types";
+} from "@crudx2/crud-request/lib/types/request-query.types";
 
 import { QueryFilterOption } from "../types";
 

@@ -6,7 +6,7 @@ import {
 import { APP_FILTER } from "@nestjs/core";
 import { Test } from "@nestjs/testing";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { RequestQueryBuilder } from "@crudx/crud-request";
+import { RequestQueryBuilder } from "@crudx2/crud-request";
 import "jest-extended";
 import * as request from "supertest";
 

@@ -4,7 +4,7 @@ import {
   ExceptionFilter,
   HttpStatus,
 } from "@nestjs/common";
-import { RequestQueryException } from "@crudx/crud-request";
+import { RequestQueryException } from "@crudx2/crud-request";
 import { Response } from "express";
 
 @Catch(RequestQueryException)

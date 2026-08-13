@@ -12,7 +12,7 @@ import {
 } from "@nestjs/common";
 import { APP_GUARD, NestApplication } from "@nestjs/core";
 import { Test } from "@nestjs/testing";
-import { RequestQueryBuilder } from "@crudx/crud-request";
+import { RequestQueryBuilder } from "@crudx2/crud-request";
 import * as supertest from "supertest";
 import { Crud, ParsedRequest, CrudAuth, Override } from "../src/decorators";
 import { CrudRequestInterceptor } from "../src/interceptors";

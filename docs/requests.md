@@ -7,7 +7,7 @@ nav_order: 20
 
 ## Description
 
-**crudx/crud** provides a full range of path and query parameters parsing/validation to help you build rich RESTful APIs. [**@crudx/crud-request**](https://www.npmjs.com/package/@crudx/crud-request) is responsible for that.
+**crudx/crud** provides a full range of path and query parameters parsing/validation to help you build rich RESTful APIs. [**@crudx2/crud-request**](https://www.npmjs.com/package/@crudx2/crud-request) is responsible for that.
 
 ## Table of Contents
 
@@ -281,7 +281,7 @@ _Usage:_
 
 ## Frontend usage
 
-[**@crudx/crud-request**](https://www.npmjs.com/package/@crudx/crud-request) is a framework agnostic package that has been designed for both backend and frontend usage. It's also used by [**@crudx/crud**](https://www.npmjs.com/package/@crudx/crud) package in `CrudRequestInterceptor`.
+[**@crudx2/crud-request**](https://www.npmjs.com/package/@crudx2/crud-request) is a framework agnostic package that has been designed for both backend and frontend usage. It's also used by [**@crudx2/crud**](https://www.npmjs.com/package/@crudx2/crud) package in `CrudRequestInterceptor`.
 
 It has `RequestQueryBuilder` class that helps building a query string and customizing your query params names and delimiters.
 
@@ -290,7 +290,7 @@ It has `RequestQueryBuilder` class that helps building a query string and custom
 It has a static method `setOptions` that alows you to set different params names (defaults are shown):
 
 ```typescript
-import { RequestQueryBuilder } from "@crudx/crud-request";
+import { RequestQueryBuilder } from "@crudx2/crud-request";
 
 RequestQueryBuilder.setOptions({
   delim: "||",
@@ -315,7 +315,7 @@ RequestQueryBuilder.setOptions({
 You can compose a query string in a chaining methods manner:
 
 ```typescript
-import { RequestQueryBuilder, CondOperator } from "@crudx/crud-request";
+import { RequestQueryBuilder, CondOperator } from "@crudx2/crud-request";
 
 const qb = RequestQueryBuilder.create();
 

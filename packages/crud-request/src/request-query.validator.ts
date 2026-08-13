@@ -8,7 +8,7 @@ import {
   isStringFull,
   isUndefined,
   objKeys,
-} from "@crudx/crud-util";
+} from "@crudx2/crud-util";
 
 import { RequestQueryException } from "./exceptions";
 import { CustomOperators, ParamOption, ParamsOptions } from "./interfaces";

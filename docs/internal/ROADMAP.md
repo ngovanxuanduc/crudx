@@ -78,7 +78,7 @@ Không giữ code trong trạng thái "đang làm dở" quá lâu.
 
 ### Repository
 
-- [x] Đổi package namespace thành `@crudx/*`
+- [x] Đổi package namespace thành `@crudx2/*`
 - [x] Đổi README
 - [ ] Đổi LICENSE (nếu cần)
 - [x] Thiết lập GitHub Actions

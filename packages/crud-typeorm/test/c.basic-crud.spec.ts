@@ -3,8 +3,8 @@ import { APP_FILTER } from "@nestjs/core";
 import { Test } from "@nestjs/testing";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
-import { Crud } from "@crudx/crud";
-import { RequestQueryBuilder } from "@crudx/crud-request";
+import { Crud } from "@crudx2/crud";
+import { RequestQueryBuilder } from "@crudx2/crud-request";
 import * as request from "supertest";
 import { Company } from "../../../integration/crud-typeorm/companies";
 import { Device } from "../../../integration/crud-typeorm/devices";

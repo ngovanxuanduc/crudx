@@ -1,5 +1,5 @@
-import { RequestQueryBuilder } from "@crudx/crud-request";
-import { isObjectFull } from "@crudx/crud-util";
+import { RequestQueryBuilder } from "@crudx2/crud-request";
+import { isObjectFull } from "@crudx2/crud-util";
 import * as deepmerge from "deepmerge";
 
 import { CrudGlobalConfig } from "../interfaces";

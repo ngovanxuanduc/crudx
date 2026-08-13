@@ -1,4 +1,4 @@
-import { ObjectLiteral } from "@crudx/crud-util";
+import { ObjectLiteral } from "@crudx2/crud-util";
 import { ClassTransformOptions } from "class-transformer";
 import {
   QueryFields,

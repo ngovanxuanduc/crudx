@@ -18,7 +18,7 @@ import {
   ValidateNested,
 } from "class-validator";
 import { Type } from "class-transformer";
-import { CrudValidationGroups } from "@crudx/crud";
+import { CrudValidationGroups } from "@crudx2/crud";
 
 import { BaseEntity } from "../base-entity";
 import { UserProfile } from "../users-profiles/user-profile.entity";

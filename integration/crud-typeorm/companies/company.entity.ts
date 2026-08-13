@@ -1,4 +1,4 @@
-import { CrudValidationGroups } from "@crudx/crud";
+import { CrudValidationGroups } from "@crudx2/crud";
 import {
   Entity,
   Column,

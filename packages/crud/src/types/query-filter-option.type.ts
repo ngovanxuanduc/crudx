@@ -1,7 +1,7 @@
 import {
   QueryFilter,
   SCondition,
-} from "@crudx/crud-request/lib/types/request-query.types";
+} from "@crudx2/crud-request/lib/types/request-query.types";
 
 export type QueryFilterFunction = (
   search?: SCondition,

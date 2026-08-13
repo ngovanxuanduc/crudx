@@ -6,7 +6,7 @@ import {
   CrudRequest,
   ParsedRequest,
   Override,
-} from "@crudx/crud";
+} from "@crudx2/crud";
 
 import { User } from "./user.entity";
 import { UsersService } from "./users.service";

@@ -12,13 +12,13 @@ layout: home
 ## Installation
 
 ```
-npm i @crudx/crud-typeorm @nestjs/typeorm typeorm
+npm i @crudx2/crud-typeorm @nestjs/typeorm typeorm
 ```
 
 For for TypeORM 0.2.x :
 
 ```
-npm i @crudx/crud-typeorm@~5.1 @nestjs/typeorm@~8.0.2 typeorm@~0.2
+npm i @crudx2/crud-typeorm@~5.1 @nestjs/typeorm@~8.0.2 typeorm@~0.2
 ```
 
 ## Compatibility

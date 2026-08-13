@@ -1,5 +1,5 @@
-import { SCondition } from "@crudx/crud-request/lib/types/request-query.types";
-import { ObjectLiteral } from "@crudx/crud-util";
+import { SCondition } from "@crudx2/crud-request/lib/types/request-query.types";
+import { ObjectLiteral } from "@crudx2/crud-util";
 import { ClassTransformOptions } from "class-transformer";
 
 export interface AuthGlobalOptions {

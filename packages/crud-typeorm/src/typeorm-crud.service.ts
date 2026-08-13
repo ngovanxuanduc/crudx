@@ -8,7 +8,7 @@ import {
   JoinOption,
   JoinOptions,
   QueryOptions,
-} from "@crudx/crud";
+} from "@crudx2/crud";
 import {
   ComparisonOperator,
   ParsedRequestParams,
@@ -17,7 +17,7 @@ import {
   QuerySort,
   SCondition,
   SConditionKey,
-} from "@crudx/crud-request";
+} from "@crudx2/crud-request";
 import {
   ClassType,
   hasLength,
@@ -27,7 +27,7 @@ import {
   isObject,
   isUndefined,
   objKeys,
-} from "@crudx/crud-util";
+} from "@crudx2/crud-util";
 import { oO } from "@zmotivat0r/o0";
 import { plainToClass } from "class-transformer";
 import {

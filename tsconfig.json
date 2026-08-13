@@ -15,14 +15,14 @@
     "composite": true,
     "strictNullChecks": false,
     "paths": {
-      "@crudx/crud": ["./packages/crud/src"],
-      "@crudx/crud-typeorm": ["./packages/crud-typeorm/src"],
-      "@crudx/crud-request": ["./packages/crud-request/src"],
-      "@crudx/crud-util": ["./packages/crud-util/src"],
-      "@crudx/crud/*": ["./packages/crud/src/*"],
-      "@crudx/crud-typeorm/*": ["./packages/crud-typeorm/src/*"],
-      "@crudx/crud-request/*": ["./packages/crud-request/src/*"],
-      "@crudx/crud-util/*": ["./packages/crud-util/src/*"]
+      "@crudx2/crud": ["./packages/crud/src"],
+      "@crudx2/crud-typeorm": ["./packages/crud-typeorm/src"],
+      "@crudx2/crud-request": ["./packages/crud-request/src"],
+      "@crudx2/crud-util": ["./packages/crud-util/src"],
+      "@crudx2/crud/*": ["./packages/crud/src/*"],
+      "@crudx2/crud-typeorm/*": ["./packages/crud-typeorm/src/*"],
+      "@crudx2/crud-request/*": ["./packages/crud-request/src/*"],
+      "@crudx2/crud-util/*": ["./packages/crud-util/src/*"]
     }
   },
   "references": [

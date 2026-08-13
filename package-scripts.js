@@ -5,7 +5,7 @@ const names = ["crud-util", "crud-request", "crud", "crud-typeorm"];
 
 const getBuildCmd = (pkg) => {
   const str = "npx lerna run build";
-  const scoped = (name) => `--scope @crudx/${name}`;
+  const scoped = (name) => `--scope @crudx2/${name}`;
   return pkg
     ? `${str} ${scoped(pkg)}`
     : getSeries(names.map((name) => `build.${name}`));
