@@ -168,7 +168,7 @@ Tăng test coverage cho:
 
 ### Release
 
-- [ ] `v6.0.0`
+- [x] `v6.0.0`
 
 ---
 
