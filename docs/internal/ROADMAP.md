@@ -78,35 +78,35 @@ Không giữ code trong trạng thái "đang làm dở" quá lâu.
 
 ### Repository
 
-- [ ] Đổi package namespace thành `@crudx/*`
-- [ ] Đổi README
+- [x] Đổi package namespace thành `@crudx/*`
+- [x] Đổi README
 - [ ] Đổi LICENSE (nếu cần)
-- [ ] Thiết lập GitHub Actions
+- [x] Thiết lập GitHub Actions
 - [ ] Thiết lập Changesets
-- [ ] Chuẩn hóa Yarn Workspace
+- [x] Chuẩn hóa Yarn Workspace
 
 ---
 
 ### Dependency Upgrade
 
-- [ ] Node.js 22+
+- [x] Node.js 22+
 - [ ] Yarn 4
-- [ ] NestJS 11
-- [ ] TypeScript 5.9
-- [ ] TypeORM 1.x
-- [ ] class-validator
-- [ ] class-transformer
-- [ ] rxjs
-- [ ] reflect-metadata
+- [x] NestJS 11
+- [x] TypeScript 5.9
+- [x] TypeORM 1.x
+- [x] class-validator
+- [x] class-transformer
+- [x] rxjs
+- [x] reflect-metadata
 
 ---
 
 ### Build
 
-- [ ] `yarn install`
-- [ ] `yarn build`
+- [x] `yarn install`
+- [x] `yarn build`
 - [ ] `yarn lint`
-- [ ] `yarn test`
+- [x] `yarn test`
 
 Tất cả phải chạy thành công.
 
@@ -114,9 +114,7 @@ Tất cả phải chạy thành công.
 
 ### Release
 
-```
-v6.0.0-alpha.1
-```
+- [x] `v6.0.0-alpha.1`
 
 ---
 
@@ -130,30 +128,30 @@ v6.0.0-alpha.1
 
 ### CRUD
 
-- [ ] Create
-- [ ] Read
-- [ ] Update
-- [ ] Delete
+- [x] Create
+- [x] Read
+- [x] Update
+- [x] Delete
 
 ---
 
 ### Query
 
-- [ ] Filter
-- [ ] Search
-- [ ] Sort
-- [ ] Pagination
-- [ ] Join
+- [x] Filter
+- [x] Search
+- [x] Sort
+- [x] Pagination
+- [x] Join
 
 ---
 
 ### TypeORM
 
-- [ ] Repository
-- [ ] QueryBuilder
-- [ ] Relation
-- [ ] Soft Delete
-- [ ] Transactions
+- [x] Repository
+- [x] QueryBuilder
+- [x] Relation
+- [x] Soft Delete
+- [x] Transactions
 
 ---
 
@@ -161,18 +159,16 @@ v6.0.0-alpha.1
 
 Tăng test coverage cho:
 
-- Parser
-- CRUD
-- Repository
-- QueryBuilder
+- [x] Parser
+- [x] CRUD
+- [x] Repository
+- [x] QueryBuilder
 
 ---
 
 ### Release
 
-```
-v6.0.0
-```
+- [ ] `v6.0.0`
 
 ---
 
